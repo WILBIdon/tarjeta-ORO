@@ -55,7 +55,6 @@
             border-radius: 20px;
             box-shadow: 0 0 0 2px #333, var(--shadow-hard);
             overflow: hidden;
-            /* SIN SCROLL */
             position: relative;
 
             will-change: transform, opacity;
@@ -78,14 +77,12 @@
         .floating-crown {
             position: absolute;
             top: 32%;
-            /* Posición exacta de la estrella en el fondo */
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
             height: auto;
             z-index: 20;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(192, 192, 192, 0.6));
-            /* SIN ANIMACIÓN - ESTÁTICA */
         }
 
         /* --- 4. CONTENEDOR DE ESTRELLAS --- */
@@ -100,7 +97,7 @@
             z-index: 15;
         }
 
-        /* --- 5. ESTRELLA INDIVIDUAL (PLATEADA Y BRILLANTE) --- */
+        /* --- 5. ESTRELLA INDIVIDUAL --- */
         .star {
             position: absolute;
             width: 8px;
@@ -186,6 +183,141 @@
             font-family: 'Segoe UI', sans-serif;
             font-weight: 500;
         }
+
+        /* --- 7. MODAL/POPUP --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid var(--fuchsia);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 90%;
+            width: 320px;
+            text-align: center;
+            color: var(--text-color);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--fuchsia);
+            font-weight: bold;
+        }
+
+        .modal-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* --- 8. FORMULARIO RSVP --- */
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rsvp-form input,
+        .rsvp-form select,
+        .rsvp-form textarea {
+            padding: 12px;
+            border: 1px solid rgba(255, 0, 255, 0.4);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .rsvp-form input:focus,
+        .rsvp-form select:focus,
+        .rsvp-form textarea:focus {
+            border-color: var(--fuchsia);
+        }
+
+        .rsvp-form input::placeholder,
+        .rsvp-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .rsvp-form select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .rsvp-form button {
+            padding: 14px;
+            background: linear-gradient(135deg, var(--fuchsia) 0%, #cc00cc 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .rsvp-form button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Icono de vestido/traje */
+        .dress-icon {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
@@ -193,17 +325,18 @@
 
     <div class="mobile-frame">
 
-        <!-- CONTENEDOR DE ESTRELLAS (generadas por JS) -->
+        <!-- CONTENEDOR DE ESTRELLAS -->
         <div class="stars-container" id="starsContainer"></div>
 
-        <!-- CORONA FLOTANTE -->
+        <!-- CORONA -->
         <img src="./Nueva corona.png" alt="Corona" class="floating-crown" id="floatingCrown">
 
         <!-- BOTONES DE PIE DE PÁGINA -->
         <div class="footer-actions">
 
-            <!-- Botón 1: Lugar recepción -->
-            <a href="#" class="action-item">
+            <!-- Botón 1: Lugar recepción (Google Maps) -->
+            <a href="https://www.google.com/maps/place/Encanto+-+Salon+de+Eventos/@6.2569761,-75.5608857,17z/data=!3m1!4b1!4m6!3m5!1s0x8e44299480a68463:0x82c95b8954d3f891!8m2!3d6.2569761!4d-75.5608857!16s%2Fg%2F11wqrgbyv5?entry=ttu&g_ep=EgoyMDI1MTIwOC4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" class="action-item">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24">
                         <path
@@ -214,7 +347,7 @@
             </a>
 
             <!-- Botón 2: Confirmar asistencia -->
-            <a href="#" class="action-item">
+            <div class="action-item" onclick="openModal('rsvpModal')">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24">
                         <path
@@ -222,10 +355,10 @@
                     </svg>
                 </div>
                 <span class="action-text">Confirmar<br>Asistencia</span>
-            </a>
+            </div>
 
             <!-- Botón 3: Lluvia de sobres -->
-            <a href="#" class="action-item">
+            <div class="action-item" onclick="openModal('sobresModal')">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24">
                         <path
@@ -233,10 +366,10 @@
                     </svg>
                 </div>
                 <span class="action-text">Lluvia de<br>Sobres</span>
-            </a>
+            </div>
 
             <!-- Botón 4: Código de vestuario -->
-            <a href="#" class="action-item">
+            <div class="action-item" onclick="openModal('dressModal')">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24">
                         <path
@@ -244,8 +377,53 @@
                     </svg>
                 </div>
                 <span class="action-text">Código de<br>Vestuario</span>
-            </a>
+            </div>
 
+        </div>
+    </div>
+
+    <!-- MODAL: RSVP -->
+    <div class="modal-overlay" id="rsvpModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('rsvpModal')">&times;</span>
+            <div class="modal-title">Confirmar Asistencia</div>
+            <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
+                <input type="text" id="rsvpName" placeholder="Tu nombre" required>
+                <select id="rsvpAttend" required>
+                    <option value="">¿Asistirás?</option>
+                    <option value="Sí, asistiré">Sí, asistiré</option>
+                    <option value="No podré asistir">No podré asistir</option>
+                </select>
+                <textarea id="rsvpMessage" placeholder="Mensaje (opcional)" rows="3"></textarea>
+                <button type="submit">Enviar por WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LLUVIA DE SOBRES -->
+    <div class="modal-overlay" id="sobresModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('sobresModal')">&times;</span>
+            <div class="modal-icon">🎁</div>
+            <div class="modal-title">Lluvia de Sobres</div>
+            <div class="modal-text">
+                Tu presencia es el mejor regalo.<br><br>
+                Si deseas obsequiarnos algo, un sobre será muy apreciado.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CÓDIGO DE VESTUARIO -->
+    <div class="modal-overlay" id="dressModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('dressModal')">&times;</span>
+            <div class="modal-icon">🖤</div>
+            <div class="modal-title">Código de Vestuario</div>
+            <div class="modal-text">
+                <strong>Traje Negro Elegante</strong><br><br>
+                Damas: Vestido negro elegante<br>
+                Caballeros: Traje negro formal
+            </div>
         </div>
     </div>
 
@@ -258,38 +436,70 @@
             const star = document.createElement('div');
             star.className = 'star';
 
-            // Posición basada en la corona
             const crownRect = crown.getBoundingClientRect();
             const containerRect = starsContainer.getBoundingClientRect();
 
-            // Posición relativa al contenedor
             const crownCenterX = crownRect.left - containerRect.left + crownRect.width / 2;
             const crownBottomY = crownRect.top - containerRect.top + crownRect.height;
 
-            // Variación aleatoria en X
             const offsetX = (Math.random() - 0.5) * 50;
             star.style.left = (crownCenterX + offsetX) + 'px';
             star.style.top = crownBottomY + 'px';
 
-            // Tamaño aleatorio
             const size = 4 + Math.random() * 6;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
 
-            // Duración aleatoria
-            const duration = 1.5 + Math.random() * 1.5;
+            const duration = 3 + Math.random() * 2;
             star.style.animationDuration = duration + 's';
 
             starsContainer.appendChild(star);
 
-            // Eliminar después de la animación
             setTimeout(() => {
                 star.remove();
             }, duration * 1000);
         }
 
-        // Crear estrellas periódicamente
         setInterval(createStar, 300);
+
+        // --- MODALES ---
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // --- ENVIAR A WHATSAPP ---
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('rsvpName').value;
+            const attend = document.getElementById('rsvpAttend').value;
+            const message = document.getElementById('rsvpMessage').value;
+
+            let text = `*Confirmación de Asistencia*%0A`;
+            text += `📛 Nombre: ${name}%0A`;
+            text += `✅ Respuesta: ${attend}`;
+            if (message) {
+                text += `%0A💬 Mensaje: ${message}`;
+            }
+
+            const whatsappUrl = `https://wa.me/573002436120?text=${text}`;
+            window.open(whatsappUrl, '_blank');
+
+            closeModal('rsvpModal');
+        }
     </script>
 
 </body>
