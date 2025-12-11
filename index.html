@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <!-- Viewport optimizado para prevenir zoom accidental en iOS al tocar inputs -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+
     <!-- OPTIMIZACIÓN SEO Y REDES SOCIALES (Open Graph) -->
     <!-- Cambia este contenido para personalizar cómo se ve el enlace en WhatsApp/Facebook -->
     <title>Mi Invitación Especial</title>
@@ -22,8 +23,8 @@
         :root {
             --bg-color: #000;
             --text-color: #fff;
-            --shadow-soft: 0 2px 4px rgba(0,0,0,0.5);
-            --shadow-hard: 0 20px 50px rgba(0,0,0,0.9);
+            --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.5);
+            --shadow-hard: 0 20px 50px rgba(0, 0, 0, 0.9);
         }
 
         * {
@@ -40,33 +41,34 @@
             justify-content: center;
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         /* --- 2. CONTENEDOR PRINCIPAL (FRAME) --- */
         .mobile-frame {
             /* Mantiene proporción 750x1334 (iPhone standard design size) */
             aspect-ratio: 750 / 1334;
-            
+
             /* Lógica de dimensionamiento responsivo */
             height: 95vh;
-            max-height: 1334px; 
+            max-height: 1334px;
             width: auto;
-            
-        /* --- GESTIÓN DE IMAGEN DE FONDO --- */
+
+            /* --- GESTIÓN DE IMAGEN DE FONDO --- */
             background-image: url('./tarjeta-maiana-15.png');
-            
+
             background-size: cover;
-            background-position: center top; 
+            background-position: center top;
             background-repeat: no-repeat;
             background-color: #1a1a1a;
-            
+
             /* Estética del dispositivo */
-            border-radius: 20px; 
+            border-radius: 20px;
             box-shadow: 0 0 0 2px #333, var(--shadow-hard);
-            overflow: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             position: relative;
-            
+
             /* Performance: will-change avisa al navegador que esto se animará */
             will-change: transform, opacity;
             animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -74,37 +76,48 @@
 
         /* --- 3. ANIMACIONES --- */
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* --- 4. CONTENIDO INTERNO --- */
         .content {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            
+
             /* Espaciado seguro para el diseño floral */
-            padding-top: 35%; 
+            padding-top: 35%;
             padding-left: 10%;
             padding-right: 10%;
-            
+
             text-align: center;
             color: var(--text-color);
             z-index: 2;
         }
-        
+
         h1 {
             /* Tipografía fluida basada en la altura del viewport (vh) */
-            font-size: 3vh; 
+            font-size: 3vh;
             text-shadow: var(--shadow-soft);
             margin-bottom: 2vh;
             letter-spacing: 0.5px;
-            font-family: 'Georgia', serif; /* Más elegante para invitaciones */
+            font-family: 'Georgia', serif;
+            /* Más elegante para invitaciones */
         }
-        
+
         p {
             font-size: 2vh;
             line-height: 1.6;
@@ -131,9 +144,9 @@
         .btn-action:hover {
             background: rgba(255, 255, 255, 0.4);
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="mobile-frame">
@@ -142,10 +155,11 @@
             <h1>Estás Invitado</h1>
             <p>¡Celebra con nosotros este día especial!</p>
             <p>Mariana</p>
-            
+
             <a href="#" class="btn-action">Confirmar Asistencia</a>
         </div>
     </div>
 
 </body>
+
 </html>
