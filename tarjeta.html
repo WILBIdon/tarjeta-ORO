@@ -76,11 +76,13 @@
         /* --- 3. CORONA ESTÁTICA --- */
         .floating-crown {
             position: absolute;
-            top: 22%;
-            /* Encima de la estrella, sin taparla */
+            top: 28%;
+            /* Sobre la estrella del fondo */
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
+            width: 250px;
+            /* Mínimo 250px */
+            min-width: 250px;
             height: auto;
             z-index: 20;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(192, 192, 192, 0.6));
@@ -108,7 +110,7 @@
             opacity: 1;
             pointer-events: none;
             box-shadow: 0 0 6px #fff, 0 0 12px rgba(255, 255, 255, 0.8);
-            animation: fallStar 4.5s ease-out forwards;
+            animation: fallStar 7s ease-out forwards;
         }
 
         @keyframes fallStar {
