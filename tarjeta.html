@@ -632,7 +632,8 @@
                 document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
                 document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
             } else {
-                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><div class="countdown-number" style="font-size:18px;">¡Es Hoy!</div></div>';
+                // Ocultar countdown cuando llegue a cero
+                document.getElementById('countdown').style.display = 'none';
             }
         }
 
@@ -680,7 +681,7 @@
 
         function toggleMusic() {
             if (isMuted) {
-                bgMusic.play().catch(() => {});
+                bgMusic.play().catch(() => { });
                 musicBtn.classList.remove('muted');
                 isMuted = false;
             } else {
@@ -699,7 +700,7 @@
             };
 
             if (navigator.share) {
-                navigator.share(shareData).catch(() => {});
+                navigator.share(shareData).catch(() => { });
             } else {
                 // Fallback: compartir por WhatsApp
                 const text = encodeURIComponent('¡Estás invitado/a a un momento especial! 🎉 Abre aquí: ' + window.location.href);
