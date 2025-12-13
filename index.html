@@ -12,9 +12,9 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <!-- Precargar tarjeta.html y assets -->
+    <!-- Solo prefetch de tarjeta, video carga bajo demanda para velocidad -->
     <link rel="prefetch" href="./tarjeta.html">
-    <link rel="preload" href="./ggg (1).mp4" as="video">
+    <link rel="prefetch" href="./tarjeta-maiana-152.jpg">
 
     <style>
         * {
@@ -155,8 +155,8 @@
         <div class="tap-text">Toca para abrir tu invitación ✨</div>
     </div>
 
-    <!-- Video que se reproduce al tocar -->
-    <video class="intro-video" id="introVideo" playsinline webkit-playsinline>
+    <!-- Video que se reproduce al tocar (lazy load para velocidad) -->
+    <video class="intro-video" id="introVideo" playsinline webkit-playsinline preload="none">
         <source src="./ggg (1).mp4" type="video/mp4">
     </video>
 
