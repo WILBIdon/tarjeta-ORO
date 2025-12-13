@@ -12,8 +12,6 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <!-- Sin precarga para que el video cargue fluido -->
-
     <style>
         * {
             box-sizing: border-box;
@@ -153,8 +151,8 @@
         <div class="tap-text">Toca para abrir tu invitación ✨</div>
     </div>
 
-    <!-- Video que se reproduce al tocar (lazy load para velocidad) -->
-    <video class="intro-video" id="introVideo" playsinline webkit-playsinline preload="none">
+    <!-- Video con preload auto para carga completa antes de reproducir -->
+    <video class="intro-video" id="introVideo" playsinline webkit-playsinline preload="auto">
         <source src="./video.mp4" type="video/mp4">
     </video>
 
@@ -168,12 +166,11 @@
         const introVideo = document.getElementById('introVideo');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const tapText = document.querySelector('.tap-text');
+        let videoReady = false;
 
-        // Precargar video cuando la página carga (después de la imagen)
-        window.addEventListener('load', function () {
-            // Forzar precarga del video en segundo plano
-            introVideo.preload = 'auto';
-            introVideo.load();
+        // Marcar video como listo cuando puede reproducirse sin pausas
+        introVideo.addEventListener('canplaythrough', function () {
+            videoReady = true;
         });
 
         // Al tocar el fondo
@@ -182,21 +179,28 @@
             introButton.classList.add('hidden');
             tapText.style.display = 'none';
 
-            // Mostrar loading mientras carga el video
-            loadingOverlay.classList.add('active');
-
-            // Intentar reproducir video
+            // Mostrar video
             introVideo.classList.add('active');
 
-            introVideo.play().then(() => {
-                // Video comenzó, ocultar loading
-                loadingOverlay.classList.remove('active');
-            }).catch((error) => {
-                console.log('Error playing video:', error);
-                // Si falla, redirigir directamente
-                loadingOverlay.classList.remove('active');
-                window.location.href = './tarjeta.html';
-            });
+            if (videoReady) {
+                // Video ya está listo, reproducir inmediatamente
+                introVideo.play().catch((error) => {
+                    console.log('Error playing video:', error);
+                    window.location.href = './tarjeta.html';
+                });
+            } else {
+                // Mostrar loading y esperar a que el video esté listo
+                loadingOverlay.classList.add('active');
+
+                introVideo.addEventListener('canplaythrough', function onReady() {
+                    loadingOverlay.classList.remove('active');
+                    introVideo.play().catch((error) => {
+                        console.log('Error playing video:', error);
+                        window.location.href = './tarjeta.html';
+                    });
+                    introVideo.removeEventListener('canplaythrough', onReady);
+                }, { once: true });
+            }
         });
 
         // Cuando el video termina, redirigir
