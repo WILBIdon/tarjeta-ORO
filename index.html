@@ -171,14 +171,6 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const tapText = document.querySelector('.tap-text');
 
-        // Precargar tarjeta.html en segundo plano
-        function preloadTarjeta() {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = './tarjeta.html';
-            document.body.appendChild(iframe);
-        }
-
         // Al tocar el fondo
         introButton.addEventListener('click', function () {
             // Ocultar fondo y texto
@@ -187,9 +179,6 @@
 
             // Mostrar loading mientras carga el video
             loadingOverlay.classList.add('active');
-
-            // Precargar tarjeta
-            preloadTarjeta();
 
             // Intentar reproducir video
             introVideo.classList.add('active');
