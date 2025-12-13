@@ -18,6 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap"
         rel="stylesheet">
 
+    <!-- Preload del fondo para carga rápida -->
+    <link rel="preload" href="./tarjeta-maiana-152.jpg" as="image" type="image/jpeg">
+
     <style>
         /* --- 1. RESET Y VARIABLES --- */
         :root {
@@ -53,11 +56,15 @@
             max-height: 1334px;
             width: auto;
 
-            background-image: url('./tarjeta-maiana-15.png');
+            background-image: url('./tarjeta-maiana-152.jpg');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
             background-color: #1a1a1a;
+            /* Optimización de renderizado para móviles */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateZ(0);
 
             border-radius: 20px;
             box-shadow: 0 0 0 2px #333, var(--shadow-hard);
