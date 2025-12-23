@@ -5,10 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- iOS Optimizations -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+
     <title>Invitación Especial</title>
     <meta property="og:title" content="Estás invitado/a">
     <meta property="og:description" content="Toca para abrir tu invitación especial">
     <meta property="og:type" content="website">
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="./fondo1.png" as="image" type="image/png">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
@@ -151,8 +159,8 @@
         <div class="tap-text">Toca para abrir tu invitación ✨</div>
     </div>
 
-    <!-- Video con preload auto para carga completa antes de reproducir -->
-    <video class="intro-video" id="introVideo" playsinline webkit-playsinline preload="auto">
+    <!-- Video optimizado: preload="none" para no bloquear carga inicial -->
+    <video class="intro-video" id="introVideo" playsinline webkit-playsinline preload="none">
         <source src="./video.mp4" type="video/mp4">
     </video>
 

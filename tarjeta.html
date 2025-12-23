@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <!-- iOS Optimizations -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+
     <title>Mi Invitación Especial</title>
     <meta property="og:title" content="Estás invitado/a">
     <meta property="og:description" content="Acompáñanos en este momento especial. Toca aquí para ver los detalles.">
@@ -12,7 +17,7 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <!-- Google Fonts: Elegant Typography -->
+    <!-- Google Fonts: Optimized with preconnect and swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap"
@@ -516,6 +521,38 @@
         .bg-audio {
             display: none;
         }
+
+        /* --- 12. MOBILE PERFORMANCE OPTIMIZATIONS --- */
+        /* Reduce animations on mobile devices */
+        @media (max-width: 768px) {
+            .icon-circle {
+                animation: none;
+            }
+
+            .action-text {
+                animation: none;
+            }
+
+            .star {
+                animation-duration: 10s;
+            }
+
+            .floating-crown {
+                animation-duration: 4s;
+            }
+        }
+
+        /* Respect user preference for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -694,11 +731,23 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS CON MOVIMIENTO ONDULANTE ---
+        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS CON MOVIMIENTO ONDULANTE (OPTIMIZADO) ---
         const starsContainer = document.getElementById('starsContainer');
         const crown = document.getElementById('floatingCrown');
 
+        // Límite de estrellas para mejor rendimiento
+        const MAX_STARS = 12;
+        let starCount = 0;
+
+        // Detectar si es móvil para reducir frecuencia
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const starInterval = isMobile ? 600 : 300; // Menos frecuente en móvil
+
         function createStar() {
+            // No crear más estrellas si llegamos al límite
+            if (starCount >= MAX_STARS) return;
+
+            starCount++;
             const star = document.createElement('div');
             star.className = 'star';
 
@@ -716,17 +765,18 @@
             star.style.width = size + 'px';
             star.style.height = size + 'px';
 
-            const duration = 5 + Math.random() * 3;
+            const duration = isMobile ? 8 + Math.random() * 4 : 5 + Math.random() * 3;
             star.style.animationDuration = duration + 's';
 
             starsContainer.appendChild(star);
 
             setTimeout(() => {
                 star.remove();
+                starCount--;
             }, duration * 1000);
         }
 
-        setInterval(createStar, 250);
+        setInterval(createStar, starInterval);
 
         // --- MÚSICA DE FONDO ---
         const bgMusic = document.getElementById('bgMusic');
