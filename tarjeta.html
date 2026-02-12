@@ -98,14 +98,16 @@
 
         /* --- 4. CONTENEDOR DE ESTRELLAS --- */
         .stars-container {
-            position: absolute;
+            position: fixed;
+            /* Fix para movil */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
             overflow: hidden;
-            z-index: 15;
+            z-index: 5;
+            /* Asegurar visibilidad pero detras de controles */
         }
 
         /* --- 5. ESTRELLA CAYENDO LENTAMENTE (DORADA Y FADE) --- */
@@ -225,26 +227,19 @@
             transition: transform 0.3s ease;
         }
 
-        /* Texto emergente al tocar/hover */
+        /* Texto debajo del icono (Siempre visible) */
         .action-text {
-            position: absolute;
-            bottom: 50px;
-            /* Aparece encima */
-            background: rgba(10, 10, 10, 0.9);
+            margin-top: 5px;
             color: var(--gold);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 14px;
-            /* Texto mas grande y legible */
+            font-size: 10px;
             font-family: 'Playfair Display', serif;
             letter-spacing: 0.5px;
-            border: 1px solid var(--gold);
-            opacity: 0;
-            transform: translateY(10px) scale(0.9);
-            transition: all 0.25s ease-out;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
             pointer-events: none;
             white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
         }
 
         /* Estados Activos (Hover / Touch) */
@@ -259,7 +254,6 @@
         .action-item:hover .action-text,
         .action-item:active .action-text {
             opacity: 1;
-            transform: translateY(0) scale(1);
         }
 
         /* --- 8. BOTÓN DE COMPARTIR Y MÚSICA --- */
@@ -334,19 +328,50 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 90%;
-            width: 320px;
+            background: #fdfdfd;
+            /* Fondo claro */
+            color: #333;
+            /* Texto oscuro */
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
             text-align: center;
-            color: var(--text-color);
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
             position: relative;
-            transform: translateY(30px) scale(0.95);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--gold);
             opacity: 0;
             animation: modalSlideUp 0.4s ease 0.1s forwards;
+        }
+
+        .modal-title {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #555;
+            /* Icono oscuro */
+        }
+
+        .modal-content p,
+        .modal-content li {
+            font-family: 'Playfair Display', serif;
+            color: #444;
+            /* Texto gris oscuro */
+            line-height: 1.6;
+        }
+
+        .modal-content svg {
+            fill: #555;
+            /* Iconos sobrios oscuros */
         }
 
         @keyframes modalSlideUp {
@@ -366,15 +391,18 @@
             top: 10px;
             right: 15px;
             font-size: 28px;
-            color: #fff;
+            color: #555;
+            /* Oscuro para fondo claro */
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.2s, transform 0.2s;
+            z-index: 10;
         }
 
         .modal-close:hover {
             opacity: 1;
             transform: scale(1.1);
+            color: #000;
         }
 
         .modal-title {
@@ -557,8 +585,7 @@
         <div class="footer-actions">
 
             <!-- Botón 1: Lugar recepción (Google Maps) -->
-            <a href="https://www.google.com/maps/place/Sal%C3%B3n+de+Eventos+El+Encanto/@6.1356862,-75.2846995,15.08z/data=!4m6!3m5!1s0x8e46a18164ee871f:0x7bc1f714b481a30!8m2!3d6.1338663!4d-75.2715225!16s%2Fg%2F11jz8066gl?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank" class="action-item">
+            <div class="action-item" onclick="openMap()">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24">
                         <path
@@ -566,7 +593,7 @@
                     </svg>
                 </div>
                 <span class="action-text">Lugar Recepción<br>Cómo llegar</span>
-            </a>
+            </div>
 
             <!-- Botón 2: Confirmar asistencia -->
             <div class="action-item" onclick="openModal('rsvpModal')">
@@ -767,6 +794,11 @@
             }
         }
 
+        // --- MAPA ---
+        function openMap() {
+            window.open('https://maps.app.goo.gl/3ATmoXduKa4cgkVv7', '_blank');
+        }
+
         // --- MODALES ---
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -785,7 +817,7 @@
             });
         });
 
-        // --- ENVIAR A WHATSAPP ---
+        // --- ENVIAR A WHATSAPP (RSVP) ---
         function sendToWhatsApp(event) {
             event.preventDefault();
 
@@ -800,7 +832,7 @@
                 text += `%0A💬 Mensaje: ${message}`;
             }
 
-            const whatsappUrl = `https://wa.me/573107620423?text=${text}`;
+            const whatsappUrl = `https://wa.me/573006445429?text=${text}`;
             window.open(whatsappUrl, '_blank');
 
             closeModal('rsvpModal');
