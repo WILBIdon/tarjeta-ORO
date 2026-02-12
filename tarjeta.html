@@ -33,7 +33,7 @@
             --text-color: #fff;
             --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.5);
             --shadow-hard: 0 20px 50px rgba(0, 0, 0, 0.9);
-            --fuchsia: #ff00ff;
+            --silver: #C0C0C0;
             --gold: #d4af37;
         }
 
@@ -61,7 +61,7 @@
             max-height: 1334px;
             width: auto;
 
-            background-image: url('./tarjeta-maiana-152.jpg');
+            background-image: url('./fondotarjetainternanuevo.png');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -92,31 +92,7 @@
             }
         }
 
-        /* --- 3. CORONA CON BRILLO PULSANTE --- */
-        .floating-crown {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            min-width: 100px;
-            height: auto;
-            z-index: 20;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(192, 192, 192, 0.6));
-            animation: crownGlow 2s ease-in-out infinite;
-        }
 
-        @keyframes crownGlow {
-
-            0%,
-            100% {
-                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 20px rgba(192, 192, 192, 0.6));
-            }
-
-            50% {
-                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.4));
-            }
-        }
 
         /* --- 4. CONTENEDOR DE ESTRELLAS --- */
         .stars-container {
@@ -131,40 +107,33 @@
         }
 
         /* --- 5. ESTRELLA CON MOVIMIENTO ONDULANTE --- */
+        /* --- 5. ESTRELLA CAYENDO LENTAMENTE --- */
         .star {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, #ffffff 0%, #e0e0e0 40%, #c0c0c0 70%, transparent 100%);
+            width: 4px;
+            height: 4px;
+            background: #fff;
             border-radius: 50%;
-            opacity: 1;
+            opacity: 0.8;
             pointer-events: none;
             box-shadow: 0 0 6px #fff, 0 0 12px rgba(255, 255, 255, 0.8);
-            animation: fallStarWavy 7s ease-out forwards;
+            animation: fallSlowly linear forwards;
         }
 
-        @keyframes fallStarWavy {
+        @keyframes fallSlowly {
             0% {
+                transform: translateY(-20px) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
                 opacity: 1;
-                transform: translateY(0) translateX(0) scale(1);
-            }
-
-            25% {
-                transform: translateY(45px) translateX(15px) scale(0.9);
-            }
-
-            50% {
-                opacity: 0.8;
-                transform: translateY(90px) translateX(-10px) scale(0.7);
-            }
-
-            75% {
-                transform: translateY(135px) translateX(8px) scale(0.4);
             }
 
             100% {
+                transform: translateY(110vh) translateX(20px);
+                /* Cae hasta abajo */
                 opacity: 0;
-                transform: translateY(180px) translateX(0) scale(0.2);
             }
         }
 
@@ -182,7 +151,7 @@
             text-align: center;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 255, 0.3);
+            border: 1px solid rgba(192, 192, 192, 0.3);
             border-radius: 8px;
             padding: 6px 8px;
             min-width: 40px;
@@ -192,8 +161,8 @@
             font-family: 'Playfair Display', serif;
             font-size: 16px;
             font-weight: 600;
-            color: var(--fuchsia);
-            text-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+            color: var(--gold);
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
         }
 
         .countdown-label {
@@ -237,13 +206,13 @@
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            border: 2px solid var(--fuchsia);
+            border: 2px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.6);
             margin-bottom: 8px;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
             animation: buttonPulse 2s ease-in-out infinite;
         }
@@ -254,12 +223,12 @@
             0%,
             100% {
                 transform: scale(1);
-                box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             }
 
             50% {
                 transform: scale(1.08);
-                box-shadow: 0 0 25px rgba(255, 0, 255, 0.7), 0 0 40px rgba(255, 0, 255, 0.3);
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.3);
             }
         }
 
@@ -282,15 +251,15 @@
 
         .action-item:hover .icon-circle {
             transform: scale(1.15);
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
-            background: rgba(255, 0, 255, 0.15);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+            background: rgba(212, 175, 55, 0.15);
             animation: none;
         }
 
         .icon-circle svg {
             width: 28px;
             height: 28px;
-            fill: var(--fuchsia);
+            fill: var(--gold);
         }
 
         .action-text {
@@ -311,7 +280,7 @@
 
             50% {
                 opacity: 1;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 10px rgba(255, 0, 255, 0.5);
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 10px rgba(192, 192, 192, 0.5);
             }
         }
 
@@ -341,8 +310,8 @@
         }
 
         .floating-btn:hover {
-            border-color: var(--fuchsia);
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
         .floating-btn svg {
@@ -388,14 +357,14 @@
 
         .modal-content {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid var(--fuchsia);
+            border: 2px solid var(--gold);
             border-radius: 20px;
             padding: 30px 25px;
             max-width: 90%;
             width: 320px;
             text-align: center;
             color: var(--text-color);
-            box-shadow: 0 0 40px rgba(255, 0, 255, 0.4);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
             position: relative;
             transform: translateY(30px) scale(0.95);
             opacity: 0;
@@ -434,7 +403,7 @@
             font-family: 'Great Vibes', cursive;
             font-size: 32px;
             margin-bottom: 20px;
-            color: var(--fuchsia);
+            color: var(--gold);
         }
 
         .modal-icon {
@@ -486,8 +455,8 @@
         .rsvp-form input:focus,
         .rsvp-form select:focus,
         .rsvp-form textarea:focus {
-            border-color: var(--fuchsia);
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .rsvp-form input::placeholder,
@@ -502,7 +471,7 @@
 
         .rsvp-form button {
             padding: 16px;
-            background: linear-gradient(135deg, var(--fuchsia) 0%, #cc00cc 100%);
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
             border: none;
             border-radius: 12px;
             color: #fff;
@@ -514,7 +483,7 @@
 
         .rsvp-form button:hover {
             transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
         }
 
         /* --- 11. AUDIO HIDDEN --- */
@@ -584,8 +553,7 @@
         <!-- CONTENEDOR DE ESTRELLAS -->
         <div class="stars-container" id="starsContainer"></div>
 
-        <!-- CORONA CON BRILLO -->
-        <img src="./Nueva corona.png" alt="Corona" class="floating-crown" id="floatingCrown" loading="lazy">
+
 
         <!-- COUNTDOWN TIMER -->
         <div class="countdown-container" id="countdown">
@@ -731,49 +699,45 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS CON MOVIMIENTO ONDULANTE (OPTIMIZADO) ---
+        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS LENTAS DESDE ARRIBA ---
         const starsContainer = document.getElementById('starsContainer');
-        const crown = document.getElementById('floatingCrown');
 
-        // Límite de estrellas para mejor rendimiento
-        const MAX_STARS = 12;
+        // Más estrellas y más lento
+        const MAX_STARS = 25;
         let starCount = 0;
 
-        // Detectar si es móvil para reducir frecuencia
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const starInterval = isMobile ? 600 : 300; // Menos frecuente en móvil
+        const starInterval = 800;
 
         function createStar() {
-            // No crear más estrellas si llegamos al límite
             if (starCount >= MAX_STARS) return;
 
             starCount++;
             const star = document.createElement('div');
             star.className = 'star';
 
-            const crownRect = crown.getBoundingClientRect();
-            const containerRect = starsContainer.getBoundingClientRect();
+            // Posición aleatoria en ancho
+            const randomX = Math.random() * 100; // 0 a 100%
+            star.style.left = randomX + '%';
+            star.style.top = '-10px';
 
-            const crownCenterX = crownRect.left - containerRect.left + crownRect.width / 2;
-            const crownBottomY = crownRect.top - containerRect.top + crownRect.height;
-
-            const offsetX = (Math.random() - 0.5) * 60;
-            star.style.left = (crownCenterX + offsetX) + 'px';
-            star.style.top = crownBottomY + 'px';
-
-            const size = 4 + Math.random() * 8;
+            const size = 3 + Math.random() * 5;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
 
-            const duration = isMobile ? 8 + Math.random() * 4 : 5 + Math.random() * 3;
+            // Duración MUY lenta (15 a 25 segundos)
+            const duration = 15 + Math.random() * 10;
             star.style.animationDuration = duration + 's';
+
+            // Retraso aleatorio para naturalidad
+            star.style.animationDelay = Math.random() * 5 + 's';
 
             starsContainer.appendChild(star);
 
+            // Eliminar al terminar (margen de seguridad)
             setTimeout(() => {
                 star.remove();
                 starCount--;
-            }, duration * 1000);
+            }, (duration + 5) * 1000);
         }
 
         setInterval(createStar, starInterval);
