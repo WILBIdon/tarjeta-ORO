@@ -106,8 +106,8 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
-            z-index: 5;
-            /* Asegurar visibilidad pero detras de controles */
+            z-index: 9999;
+            /* Maxima prioridad visual */
         }
 
         /* --- 5. ESTRELLA CAYENDO LENTAMENTE (DORADA Y FADE) --- */
@@ -183,8 +183,8 @@
         /* --- 7. BOTONES DE PIE DE PÁGINA (MINIMALISTAS) --- */
         .footer-actions {
             position: absolute;
-            bottom: 60px;
-            /* Mas arriba */
+            bottom: 40px;
+            /* Ajustado */
             left: 0;
             width: 100%;
             display: flex;
@@ -194,14 +194,42 @@
             z-index: 100;
         }
 
+        .event-date-display {
+            position: absolute;
+            bottom: 140px;
+            /* Encima de botones */
+            width: 100%;
+            text-align: center;
+            color: var(--gold);
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            z-index: 90;
+            animation: pulseDate 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseDate {
+
+            0%,
+            100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
         .action-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             cursor: pointer;
-            width: 60px;
-            /* Area tactil */
+            width: 80px;
+            /* Mas grande */
             -webkit-tap-highlight-color: transparent;
             animation: float 4s ease-in-out infinite;
             /* Animacion suave */
@@ -236,41 +264,48 @@
         }
 
         .icon-circle {
-            width: 42px;
-            /* Mas pequenios */
-            height: 42px;
+            width: 65px;
+            /* Mas grande */
+            height: 65px;
             border-radius: 50%;
-            border: 1px solid var(--gold);
+            border: 2px solid var(--gold);
+            /* Borde mas visible */
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+            /* Mas oscuro para contraste */
             backdrop-filter: blur(4px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 2;
         }
 
         .icon-circle svg {
-            width: 20px;
-            height: 20px;
+            width: 32px;
+            /* Mas grande */
+            height: 32px;
             fill: var(--gold);
             transition: transform 0.3s ease;
         }
 
-        /* Texto debajo del icono (Siempre visible) */
+        /* Texto debajo del icono (Siempre visible y legible) */
         .action-text {
-            margin-top: 5px;
+            margin-top: 8px;
             color: var(--gold);
-            font-size: 10px;
+            font-size: 11px;
+            /* Mas legible */
             font-family: 'Playfair Display', serif;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+            /* Sombra fuerte */
             pointer-events: none;
             white-space: nowrap;
-            opacity: 0.8;
+            opacity: 1;
+            /* Siempre visible */
             transition: opacity 0.3s ease;
+            font-weight: 600;
         }
 
         /* Estados Activos (Hover / Touch) */
@@ -612,6 +647,11 @@
             </div>
         </div>
 
+        <!-- FECHA VISIBLE ENCIMA DE BOTONES -->
+        <div class="event-date-display">
+            23 de Marzo &bull; 12:00 m.
+        </div>
+
         <!-- BOTONES DE PIE DE PÁGINA -->
         <div class="footer-actions">
 
@@ -638,16 +678,7 @@
                 <span class="action-text">Ceremonia</span>
             </div>
 
-            <!-- Botón 3: Código de Vestuario -->
-            <div class="action-item" onclick="openModal('dressModal')">
-                <div class="icon-circle">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M15.34 2l-.84 4h-5l-.83-4H3v2.89c0 1 .45 1.93 1.22 2.54l3.19 2.55-1.12 7.02h11.42l-1.12-7.02 3.19-2.55c.78-.61 1.23-1.54 1.23-2.54V2h-5.66zM12 18c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
-                    </svg>
-                </div>
-                <span class="action-text">Vestuario</span>
-            </div>
+
 
             <!-- Botón 4: Ubicación (Modal) -->
             <div class="action-item" onclick="openModal('locationModal')">
@@ -668,8 +699,10 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('rsvpModal')">&times;</span>
             <div class="modal-title">Confirmar Asistencia</div>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Por favor confirma tu asistencia para reservar
+                tu lugar.</p>
             <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
-                <input type="text" id="rsvpName" placeholder="Tu nombre" required>
+                <input type="text" id="rsvpName" placeholder="Tu nombre completo" required>
                 <select id="rsvpAttend" required>
                     <option value="">¿Asistirás?</option>
                     <option value="Sí, asistiré">Sí, asistiré</option>
