@@ -117,411 +117,426 @@
             opacity: 0.8;
             pointer-events: none;
             box-shadow: 0 0 6px #fff, 0 0 12px rgba(255, 255, 255, 0.8);
-            animation: fallSlowly linear forwards;
-        }
 
-        @keyframes fallSlowly {
-            0% {
-                transform: translateY(-20px) translateX(0);
+            /* --- 5. ESTRELLA CAYENDO LENTAMENTE (DORADA Y FADE) --- */
+            .star {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: var(--gold);
+                border-radius: 50%;
                 opacity: 0;
+                pointer-events: none;
+                box-shadow: 0 0 8px var(--gold), 0 0 16px rgba(212, 175, 55, 0.8);
+                animation: fallSlowly linear forwards;
+                z-index: 50;
             }
 
-            10% {
-                opacity: 1;
+            @keyframes fallSlowly {
+                0% {
+                    transform: translateY(-20px) translateX(0);
+                    opacity: 0;
+                }
+
+                15% {
+                    opacity: 1;
+                }
+
+                85% {
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(110vh) translateX(20px);
+                    opacity: 0;
+                }
             }
 
-            100% {
-                transform: translateY(110vh) translateX(20px);
-                /* Cae hasta abajo */
-                opacity: 0;
-            }
-        }
-
-        /* --- 6. COUNTDOWN TIMER --- */
-        .countdown-container {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            display: flex;
-            gap: 6px;
-            z-index: 25;
-        }
-
-        .countdown-item {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(192, 192, 192, 0.3);
-            border-radius: 8px;
-            padding: 6px 8px;
-            min-width: 40px;
-        }
-
-        .countdown-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
-        }
-
-        .countdown-label {
-            font-size: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
-        }
-
-        /* --- 7. BOTONES DE PIE DE PÁGINA --- */
-        .footer-actions {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: flex-start;
-            padding: 0 10px;
-            z-index: 10;
-        }
-
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 22%;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .action-item:active {
-            transform: scale(0.95);
-        }
-
-        .icon-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            margin-bottom: 8px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-            animation: buttonPulse 2s ease-in-out infinite;
-        }
-
-        /* Animación de pulso para los botones */
-        @keyframes buttonPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            /* --- 6. COUNTDOWN TIMER --- */
+            .countdown-container {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                display: flex;
+                gap: 6px;
+                z-index: 25;
             }
 
-            50% {
-                transform: scale(1.08);
-                box-shadow: 0 0 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.3);
-            }
-        }
-
-        /* Animación con delay para efecto de ola */
-        .action-item:nth-child(1) .icon-circle {
-            animation-delay: 0s;
-        }
-
-        .action-item:nth-child(2) .icon-circle {
-            animation-delay: 0.3s;
-        }
-
-        .action-item:nth-child(3) .icon-circle {
-            animation-delay: 0.6s;
-        }
-
-        .action-item:nth-child(4) .icon-circle {
-            animation-delay: 0.9s;
-        }
-
-        .action-item:hover .icon-circle {
-            transform: scale(1.15);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
-            background: rgba(212, 175, 55, 0.15);
-            animation: none;
-        }
-
-        .icon-circle svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--gold);
-        }
-
-        .action-text {
-            font-size: 1.4vh;
-            line-height: 1.2;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: 500;
-            animation: textGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes textGlow {
-
-            0%,
-            100% {
-                opacity: 0.9;
+            .countdown-item {
+                text-align: center;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(192, 192, 192, 0.3);
+                border-radius: 8px;
+                padding: 6px 8px;
+                min-width: 40px;
             }
 
-            50% {
-                opacity: 1;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 10px rgba(192, 192, 192, 0.5);
-            }
-        }
-
-        /* --- 8. BOTÓN DE COMPARTIR Y MÚSICA --- */
-        .floating-buttons {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 30;
-        }
-
-        .floating-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .floating-btn:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-
-        .floating-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
-        }
-
-        .floating-btn.muted svg {
-            opacity: 0.4;
-        }
-
-        /* --- 9. MODAL CON ANIMACIÓN MEJORADA --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            animation: modalFadeIn 0.3s ease forwards;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
+            .countdown-number {
+                font-family: 'Playfair Display', serif;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--gold);
+                text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
             }
 
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 90%;
-            width: 320px;
-            text-align: center;
-            color: var(--text-color);
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
-            position: relative;
-            transform: translateY(30px) scale(0.95);
-            opacity: 0;
-            animation: modalSlideUp 0.4s ease 0.1s forwards;
-        }
-
-        @keyframes modalSlideUp {
-            from {
-                transform: translateY(30px) scale(0.95);
-                opacity: 0;
+            .countdown-label {
+                font-size: 8px;
+                color: rgba(255, 255, 255, 0.7);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-top: 2px;
             }
 
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            color: #fff;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-
-        .modal-close:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .modal-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--gold);
-        }
-
-        .modal-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-            animation: iconPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
+            /* --- 7. BOTONES DE PIE DE PÁGINA --- */
+            .footer-actions {
+                position: absolute;
+                bottom: 30px;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: flex-start;
+                padding: 0 10px;
+                z-index: 10;
             }
 
-            50% {
-                transform: scale(1.1);
+            .action-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                width: 22%;
+                cursor: pointer;
+                text-decoration: none;
+                color: var(--text-color);
+                transition: transform 0.3s ease;
             }
-        }
 
-        .modal-text {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
+            .action-item:active {
+                transform: scale(0.95);
+            }
 
-        /* --- 10. FORMULARIO RSVP --- */
-        .rsvp-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .rsvp-form input,
-        .rsvp-form select,
-        .rsvp-form textarea {
-            padding: 14px;
-            border: 1px solid rgba(255, 0, 255, 0.4);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 14px;
-            font-family: 'Segoe UI', sans-serif;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .rsvp-form input:focus,
-        .rsvp-form select:focus,
-        .rsvp-form textarea:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .rsvp-form input::placeholder,
-        .rsvp-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .rsvp-form select option {
-            background: #1a1a2e;
-            color: #fff;
-        }
-
-        .rsvp-form button {
-            padding: 16px;
-            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .rsvp-form button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-        }
-
-        /* --- 11. AUDIO HIDDEN --- */
-        .bg-audio {
-            display: none;
-        }
-
-        /* --- 12. MOBILE PERFORMANCE OPTIMIZATIONS --- */
-        /* Reduce animations on mobile devices */
-        @media (max-width: 768px) {
             .icon-circle {
+                width: 55px;
+                height: 55px;
+                border-radius: 50%;
+                border: 2px solid var(--gold);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.6);
+                margin-bottom: 8px;
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+                transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+                animation: buttonPulse 2s ease-in-out infinite;
+            }
+
+            /* Animación de pulso para los botones */
+            @keyframes buttonPulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+                }
+
+                50% {
+                    transform: scale(1.08);
+                    box-shadow: 0 0 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.3);
+                }
+            }
+
+            /* Animación con delay para efecto de ola */
+            .action-item:nth-child(1) .icon-circle {
+                animation-delay: 0s;
+            }
+
+            .action-item:nth-child(2) .icon-circle {
+                animation-delay: 0.3s;
+            }
+
+            .action-item:nth-child(3) .icon-circle {
+                animation-delay: 0.6s;
+            }
+
+            .action-item:nth-child(4) .icon-circle {
+                animation-delay: 0.9s;
+            }
+
+            .action-item:hover .icon-circle {
+                transform: scale(1.15);
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+                background: rgba(212, 175, 55, 0.15);
                 animation: none;
+            }
+
+            .icon-circle svg {
+                width: 28px;
+                height: 28px;
+                fill: var(--gold);
             }
 
             .action-text {
-                animation: none;
+                font-size: 1.4vh;
+                line-height: 1.2;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+                font-family: 'Segoe UI', sans-serif;
+                font-weight: 500;
+                animation: textGlow 2s ease-in-out infinite;
             }
 
-            .star {
-                animation-duration: 10s;
+            @keyframes textGlow {
+
+                0%,
+                100% {
+                    opacity: 0.9;
+                }
+
+                50% {
+                    opacity: 1;
+                    text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 10px rgba(192, 192, 192, 0.5);
+                }
             }
 
-            .floating-crown {
-                animation-duration: 4s;
+            /* --- 8. BOTÓN DE COMPARTIR Y MÚSICA --- */
+            .floating-buttons {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                z-index: 30;
             }
-        }
 
-        /* Respect user preference for reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
             }
-        }
+
+            .floating-btn:hover {
+                border-color: var(--gold);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            }
+
+            .floating-btn svg {
+                width: 20px;
+                height: 20px;
+                fill: #fff;
+            }
+
+            .floating-btn.muted svg {
+                opacity: 0.4;
+            }
+
+            /* --- 9. MODAL CON ANIMACIÓN MEJORADA --- */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .modal-overlay.active {
+                display: flex;
+                animation: modalFadeIn 0.3s ease forwards;
+            }
+
+            @keyframes modalFadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .modal-content {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                border: 2px solid var(--gold);
+                border-radius: 20px;
+                padding: 30px 25px;
+                max-width: 90%;
+                width: 320px;
+                text-align: center;
+                color: var(--text-color);
+                box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+                position: relative;
+                transform: translateY(30px) scale(0.95);
+                opacity: 0;
+                animation: modalSlideUp 0.4s ease 0.1s forwards;
+            }
+
+            @keyframes modalSlideUp {
+                from {
+                    transform: translateY(30px) scale(0.95);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 28px;
+                color: #fff;
+                cursor: pointer;
+                opacity: 0.7;
+                transition: opacity 0.2s, transform 0.2s;
+            }
+
+            .modal-close:hover {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            .modal-title {
+                font-family: 'Great Vibes', cursive;
+                font-size: 32px;
+                margin-bottom: 20px;
+                color: var(--gold);
+            }
+
+            .modal-icon {
+                font-size: 60px;
+                margin-bottom: 15px;
+                animation: iconPulse 2s ease-in-out infinite;
+            }
+
+            @keyframes iconPulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+            }
+
+            .modal-text {
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 15px;
+                font-family: 'Playfair Display', serif;
+            }
+
+            /* --- 10. FORMULARIO RSVP --- */
+            .rsvp-form {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .rsvp-form input,
+            .rsvp-form select,
+            .rsvp-form textarea {
+                padding: 14px;
+                border: 1px solid rgba(255, 0, 255, 0.4);
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                font-size: 14px;
+                font-family: 'Segoe UI', sans-serif;
+                outline: none;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            .rsvp-form input:focus,
+            .rsvp-form select:focus,
+            .rsvp-form textarea:focus {
+                border-color: var(--gold);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            }
+
+            .rsvp-form input::placeholder,
+            .rsvp-form textarea::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .rsvp-form select option {
+                background: #1a1a2e;
+                color: #fff;
+            }
+
+            .rsvp-form button {
+                padding: 16px;
+                background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+                border: none;
+                border-radius: 12px;
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            .rsvp-form button:hover {
+                transform: scale(1.03);
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            }
+
+            /* --- 11. AUDIO HIDDEN --- */
+            .bg-audio {
+                display: none;
+            }
+
+            /* --- 12. MOBILE PERFORMANCE OPTIMIZATIONS --- */
+            /* Reduce animations on mobile devices */
+            @media (max-width: 768px) {
+                .icon-circle {
+                    animation: none;
+                }
+
+                .action-text {
+                    animation: none;
+                }
+
+                .star {
+                    animation-duration: 10s;
+                }
+
+                .floating-crown {
+                    animation-duration: 4s;
+                }
+            }
+
+            /* Respect user preference for reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
     </style>
 </head>
 
