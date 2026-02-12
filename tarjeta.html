@@ -144,40 +144,49 @@
             }
         }
 
-        /* --- 6. COUNTDOWN TIMER --- */
+        /* --- 6. CUENTA REGRESIVA (CONTADOR) --- */
         .countdown-container {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            bottom: 110px;
+            /* Movido abajo, encima de botones */
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 6px;
-            z-index: 25;
+            gap: 10px;
+            /* Menos espacio */
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.3);
+            /* Fondo sutil para legibilidad */
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .countdown-item {
             text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(192, 192, 192, 0.3);
-            border-radius: 8px;
-            padding: 6px 8px;
-            min-width: 40px;
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
         }
 
         .countdown-number {
             font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 1.2rem;
+            /* Mas pequeio */
+            font-weight: bold;
+            line-height: 1;
             color: var(--gold);
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .countdown-label {
-            font-size: 8px;
+            font-size: 0.6rem;
+            /* Mas pequeio */
             color: rgba(255, 255, 255, 0.7);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             margin-top: 2px;
+            opacity: 0.9;
         }
 
         /* --- 7. BOTONES DE PIE DE PÁGINA (MINIMALISTAS) --- */
@@ -194,33 +203,7 @@
             z-index: 100;
         }
 
-        .event-date-display {
-            position: absolute;
-            bottom: 140px;
-            /* Encima de botones */
-            width: 100%;
-            text-align: center;
-            color: var(--gold);
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-            z-index: 90;
-            animation: pulseDate 3s ease-in-out infinite;
-        }
 
-        @keyframes pulseDate {
-
-            0%,
-            100% {
-                opacity: 0.9;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-        }
 
         .action-item {
             display: flex;
@@ -228,11 +211,14 @@
             align-items: center;
             position: relative;
             cursor: pointer;
-            width: 80px;
-            /* Mas grande */
+            width: 60px;
+            /* Reducido de 80px */
             -webkit-tap-highlight-color: transparent;
             animation: float 4s ease-in-out infinite;
-            /* Animacion suave */
+            -webkit-animation: float 4s ease-in-out infinite;
+            /* Safari/Chrome fix */
+            will-change: transform;
+            /* Performance fix */
         }
 
         .action-item:nth-child(1) {
@@ -259,14 +245,28 @@
             }
 
             50% {
-                transform: translateY(-8px);
+                transform: translateY(-6px);
+            }
+        }
+
+        @-webkit-keyframes float {
+
+            0%,
+            100% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+
+            50% {
+                -webkit-transform: translateY(-6px);
+                transform: translateY(-6px);
             }
         }
 
         .icon-circle {
-            width: 65px;
-            /* Mas grande */
-            height: 65px;
+            width: 48px;
+            /* Reducido de 65px */
+            height: 48px;
             border-radius: 50%;
             border: 2px solid var(--gold);
             /* Borde mas visible */
@@ -276,25 +276,25 @@
             background: rgba(0, 0, 0, 0.6);
             /* Mas oscuro para contraste */
             backdrop-filter: blur(4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 2;
         }
 
         .icon-circle svg {
-            width: 32px;
-            /* Mas grande */
-            height: 32px;
+            width: 24px;
+            /* Reducido de 32px */
+            height: 24px;
             fill: var(--gold);
             transition: transform 0.3s ease;
         }
 
         /* Texto debajo del icono (Siempre visible y legible) */
         .action-text {
-            margin-top: 8px;
+            margin-top: 6px;
             color: var(--gold);
-            font-size: 11px;
-            /* Mas legible */
+            font-size: 10px;
+            /* Ajustado */
             font-family: 'Playfair Display', serif;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -647,10 +647,7 @@
             </div>
         </div>
 
-        <!-- FECHA VISIBLE ENCIMA DE BOTONES -->
-        <div class="event-date-display">
-            23 de Marzo &bull; 12:00 m.
-        </div>
+
 
         <!-- BOTONES DE PIE DE PÁGINA -->
         <div class="footer-actions">
