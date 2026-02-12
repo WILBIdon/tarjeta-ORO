@@ -34,7 +34,8 @@
             --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.5);
             --shadow-hard: 0 20px 50px rgba(0, 0, 0, 0.9);
             --silver: #C0C0C0;
-            --gold: #d4af37;
+            --gold: #D0C293;
+            /* Dorado champán/pálido, menos amarillo/rojizo */
         }
 
         * {
@@ -62,7 +63,8 @@
             width: auto;
 
             background-image: url('./fondotarjetainternanuevo.png');
-            background-size: 100% 100%;
+            background-size: 100% auto;
+            /* Ajuste por ancho */
             background-position: center top;
             background-repeat: no-repeat;
             background-color: #1a1a1a;
@@ -176,115 +178,88 @@
             margin-top: 2px;
         }
 
-        /* --- 7. BOTONES DE PIE DE PÁGINA --- */
+        /* --- 7. BOTONES DE PIE DE PÁGINA (MINIMALISTAS) --- */
         .footer-actions {
             position: absolute;
-            bottom: 30px;
+            bottom: 25px;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: space-evenly;
-            align-items: flex-start;
+            align-items: flex-end;
             padding: 0 10px;
-            z-index: 10;
+            z-index: 100;
         }
 
         .action-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            width: 22%;
+            position: relative;
             cursor: pointer;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .action-item:active {
-            transform: scale(0.95);
+            width: 60px;
+            /* Area tactil */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .icon-circle {
-            width: 55px;
-            height: 55px;
+            width: 42px;
+            /* Mas pequenios */
+            height: 42px;
             border-radius: 50%;
-            border: 2px solid var(--gold);
+            border: 1px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            margin-bottom: 8px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-            animation: buttonPulse 2s ease-in-out infinite;
-        }
-
-        /* Animación de pulso para los botones */
-        @keyframes buttonPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            }
-
-            50% {
-                transform: scale(1.08);
-                box-shadow: 0 0 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.3);
-            }
-        }
-
-        /* Animación con delay para efecto de ola */
-        .action-item:nth-child(1) .icon-circle {
-            animation-delay: 0s;
-        }
-
-        .action-item:nth-child(2) .icon-circle {
-            animation-delay: 0.3s;
-        }
-
-        .action-item:nth-child(3) .icon-circle {
-            animation-delay: 0.6s;
-        }
-
-        .action-item:nth-child(4) .icon-circle {
-            animation-delay: 0.9s;
-        }
-
-        .action-item:hover .icon-circle {
-            transform: scale(1.15);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
-            background: rgba(212, 175, 55, 0.15);
-            animation: none;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
         }
 
         .icon-circle svg {
-            width: 28px;
-            height: 28px;
+            width: 20px;
+            height: 20px;
             fill: var(--gold);
+            transition: transform 0.3s ease;
         }
 
+        /* Texto emergente al tocar/hover */
         .action-text {
-            font-size: 1.4vh;
-            line-height: 1.2;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: 500;
-            animation: textGlow 2s ease-in-out infinite;
+            position: absolute;
+            bottom: 50px;
+            /* Aparece encima */
+            background: rgba(10, 10, 10, 0.9);
+            color: var(--gold);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            /* Texto mas grande y legible */
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--gold);
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+            transition: all 0.25s ease-out;
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-        @keyframes textGlow {
+        /* Estados Activos (Hover / Touch) */
+        .action-item:hover .icon-circle,
+        .action-item:active .icon-circle {
+            transform: scale(1.15);
+            background: rgba(208, 194, 147, 0.2);
+            /* var(--gold) con opacidad */
+            box-shadow: 0 0 15px rgba(208, 194, 147, 0.4);
+        }
 
-            0%,
-            100% {
-                opacity: 0.9;
-            }
-
-            50% {
-                opacity: 1;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 10px rgba(192, 192, 192, 0.5);
-            }
+        .action-item:hover .action-text,
+        .action-item:active .action-text {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         /* --- 8. BOTÓN DE COMPARTIR Y MÚSICA --- */
