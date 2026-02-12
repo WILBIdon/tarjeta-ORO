@@ -1,10 +1,7 @@
-# Usar imagen base ligera de Nginx
 FROM nginx:alpine
 
-# Copiar archivos del proyecto al directorio público de Nginx
 COPY . /usr/share/nginx/html
 
-# Exponer el puerto 80 (puerto interno del contenedor)
-EXPOSE 80
-
-# Nginx corre automáticamente en primer plano
+# Railway assigns a dynamic port env var $PORT
+# We use sed to replace port 80 in the default nginx config with the value of $PORT
+CMD sed -i -e 's/80/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
