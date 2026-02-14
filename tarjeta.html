@@ -10,31 +10,38 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
 
-    <title>Mi Invitación Especial</title>
+    <title>Invitación Marta y Abelardo</title>
     <meta property="og:title" content="Estás invitado/a">
     <meta property="og:description" content="Acompáñanos en este momento especial. Toca aquí para ver los detalles.">
     <meta property="og:type" content="website">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <!-- Google Fonts: Optimized with preconnect and swap -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Preload del fondo para carga rápida -->
+    <!-- Preload -->
     <link rel="preload" href="./martayabelardo.webp" as="image" type="image/webp">
+    <link rel="preload" href="./fondo.webp" as="image" type="image/webp">
 
     <style>
         /* --- 1. RESET Y VARIABLES --- */
         :root {
-            --bg-color: #000;
-            --text-color: #fff;
+            --bg-color: #fff;
+            /* Fondo claro para fusionarse con imágenes */
+            --text-color: #3e2723;
+            /* Café oscuro elegante */
+            --text-secondary: #000;
+            /* Negro para textos importantes */
             --gold: #D4AF37;
             /* Dorado clásico */
-            --gold-light: #F4E4BC;
-            --dark-overlay: rgba(0, 0, 0, 0.6);
+            --gold-dark: #B8860B;
+            --font-main: 'Playfair Display', serif;
+            --font-accent: 'Great Vibes', cursive;
         }
 
         * {
@@ -47,259 +54,210 @@
             background-color: var(--bg-color);
             width: 100%;
             height: 100%;
-            font-family: 'Playfair Display', Georgia, serif;
+            font-family: var(--font-main);
             color: var(--text-color);
             overflow-x: hidden;
             overflow-y: auto;
-            /* Scroll habilitado */
         }
 
-        /* --- 2. CONTENEDOR PRINCIPAL --- */
+        /* --- 2. CONTENEDOR PRINCIPAL (Móvil) --- */
         .main-scroll {
             width: 100%;
-            max-width: 600px;
-            /* Limitar ancho en desktop */
+            max-width: 480px;
+            /* Ancho máximo de móvil típico */
             margin: 0 auto;
-            background: #111;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            background: #fff;
             position: relative;
             z-index: 10;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         /* --- 3. SECCIONES --- */
         section {
             width: 100%;
             position: relative;
-            padding: 60px 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            /* Alineación superior */
             align-items: center;
             text-align: center;
+            padding: 0;
+            /* Sin padding global para imágenes full width */
         }
 
-        /* SECCIÓN 1: HOME (Marta y Abelardo) */
+        /* SECCIÓN 1: PORTADA (Marta y Abelardo) */
         .section-home {
-            height: 100vh;
-            /* Pantalla completa */
-            background-image: url('./martayabelardo.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-        }
-
-        /* Degradado inferior para suavizar transición */
-        .section-home::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
             width: 100%;
-            height: 150px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
-            pointer-events: none;
+            /* La altura se ajusta al contenido (imagen) */
+            background-color: #fff;
         }
 
-        /* SECCIÓN 2, 3, 4: FONDO COMÚN */
-        .section-ceremony,
-        .section-location,
-        .section-rsvp {
-            min-height: 80vh;
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+        }
+
+        /* SECCIÓN 2: CUENTA REGRESIVA Y TEXTO (Fondo continuo) */
+        .section-content {
             background-image: url('./fondo.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            /* Efecto Parallax simple */
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            background-size: 100% auto;
+            /* Ajuste perfecto al ancho */
+            background-repeat: repeat-y;
+            /* Repetir verticalmente si es necesario */
+            background-position: top center;
+            padding: 20px 20px 60px;
+            margin-top: -5px;
+            /* Eliminar gaps */
         }
 
-        /* Ajuste para móviles que no soportan background-attachment: fixed bien */
-        @media (hover: none) {
-
-            .section-ceremony,
-            .section-location,
-            .section-rsvp {
-                background-attachment: scroll;
-            }
-        }
-
-        /* CAJAS DE CONTENIDO (Para leer texto sobre el fondo) */
-        .content-box {
-            background: rgba(0, 0, 0, 0.7);
-            /* Fondo semitransparente oscuro */
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 1px solid var(--gold);
-            backdrop-filter: blur(5px);
-            width: 90%;
-            max-width: 400px;
-            animation: fadeInUp 1s ease-out;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
+        /* TEXTOS Y TIPOGRAFÍA */
         h2 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            color: var(--gold);
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-family: var(--font-accent);
+            font-size: 3rem;
+            color: var(--gold-dark);
+            margin: 30px 0 15px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
         }
 
-        p {
+        h3 {
+            font-family: var(--font-main);
             font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: #eee;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-        }
-
-        .highlight-text {
-            font-size: 1.4rem;
-            color: var(--gold-light);
-            margin: 25px 0;
-            border-top: 1px solid rgba(212, 175, 55, 0.5);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.5);
-            padding: 15px 0;
-        }
-
-        .divider-gold {
-            height: 2px;
-            width: 60px;
-            background: var(--gold);
-            margin: 10px auto 25px;
-        }
-
-        /* --- 4. COUNTDOWN (Ahora en la portada) --- */
-        .countdown-container {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 20;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px 25px;
-            border-radius: 30px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(212, 175, 55, 0.6);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-number {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: var(--gold);
-            line-height: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-        }
-
-        .countdown-label {
-            font-size: 0.75rem;
-            color: #ddd;
+            color: var(--text-color);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
+            letter-spacing: 2px;
+            margin-top: 30px;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
-        /* Indicador de scroll */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .highlight-text {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--gold);
+            border-bottom: 1px solid var(--gold);
+        }
+
+        /* --- 4. COUNTDOWN (Estilo Oscuro/Elegante) --- */
+        .countdown-wrapper {
+            margin: 20px 0 40px;
+        }
+
+        .countdown-title {
+            font-family: var(--font-accent);
+            font-size: 2rem;
+            color: var(--gold-dark);
+            margin-bottom: 15px;
+        }
+
+        .event-date {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-time {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #fff;
-            font-size: 0.9rem;
-            opacity: 0.9;
-            animation: bounce 2s infinite;
-            z-index: 20;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .scroll-indicator svg {
-            width: 28px;
-            height: 28px;
-            fill: #fff;
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            font-family: var(--font-main);
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-top: 5px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
         }
 
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* --- 5. BOTONES Y FORMULARIO --- */
+        /* --- 5. BOTONES Y FORMULARIO (Estilo Oscuro) --- */
         .btn-gold {
             background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
             color: #fff;
             border: none;
             padding: 16px 32px;
             font-size: 1.1rem;
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-main);
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
             transition: transform 0.3s;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 15px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .btn-gold:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.7);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.5);
         }
 
         .rsvp-form {
             text-align: left;
             margin-top: 25px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .rsvp-form label {
             display: block;
             margin-bottom: 8px;
-            color: var(--gold);
-            font-size: 1rem;
-            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 700;
         }
 
         .rsvp-form input,
         .rsvp-form select,
         .rsvp-form textarea {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            color: #fff;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            color: #333;
             font-family: inherit;
             font-size: 1rem;
         }
@@ -309,26 +267,21 @@
         .rsvp-form textarea:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .rsvp-form select option {
-            background: #222;
-            color: #fff;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
         }
 
         /* --- 6. FOOTER --- */
         .footer {
-            background: #000;
-            padding: 50px 20px;
+            background: transparent;
+            padding: 40px 20px;
             text-align: center;
-            border-top: 1px solid #333;
+            border-top: none;
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
             padding: 12px 25px;
             border-radius: 25px;
             cursor: pointer;
@@ -337,22 +290,21 @@
             margin-top: 10px;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .btn-outline:hover {
-            background: var(--gold);
-            color: #000;
+            background: var(--text-color);
+            color: #fff;
         }
 
         .copyright {
             font-size: 0.9rem;
-            color: #777;
+            color: #666;
             margin-top: 30px;
-            font-style: italic;
         }
 
-        /* --- 7. ESTRELLAS (Fix) --- */
+        /* --- 7. ESTRELLAS (Sutiles en fondo claro) --- */
         .stars-container {
             position: fixed;
             top: 0;
@@ -360,16 +312,16 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
-            /* Detrás del contenido pero sobre el fondo */
+            z-index: 100;
+            /* Encima de todo */
         }
 
         .star {
             position: absolute;
-            background: var(--gold);
+            background: var(--gold-dark);
+            /* Más oscuras para verse */
             border-radius: 50%;
             opacity: 0;
-            box-shadow: 0 0 8px var(--gold);
             animation: fallSlowly linear forwards;
         }
 
@@ -380,11 +332,11 @@
             }
 
             10% {
-                opacity: 1;
+                opacity: 0.8;
             }
 
             90% {
-                opacity: 1;
+                opacity: 0.8;
             }
 
             100% {
@@ -396,54 +348,35 @@
         /* --- 8. BOTONES FLOTANTES --- */
         .floating-buttons {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
+            top: 15px;
+            right: 15px;
+            z-index: 200;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .floating-btn {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.6);
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.8);
             border: 1px solid var(--gold);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-        }
-
-        .floating-btn:hover {
-            transform: scale(1.1);
-            background: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .floating-btn svg {
-            width: 26px;
-            height: 26px;
-            fill: #fff;
+            width: 24px;
+            height: 24px;
+            fill: var(--gold-dark);
         }
 
         .floating-btn.muted svg {
             opacity: 0.5;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
@@ -477,96 +410,89 @@
     <!-- MAIN SCROLL CONTAINER -->
     <main class="main-scroll">
 
-        <!-- SECCIÓN 1: PORTADA (Marta y Abelardo) -->
+        <!-- SECCIÓN 1: IMAGEN PORTADA -->
         <section class="section-home">
-            <div class="countdown-container">
-                <div class="countdown-item">
-                    <div class="countdown-number" id="days">00</div>
-                    <div class="countdown-label">Días</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="hours">00</div>
-                    <div class="countdown-label">Horas</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="minutes">00</div>
-                    <div class="countdown-label">Min</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="seconds">00</div>
-                    <div class="countdown-label">Seg</div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <span>Desliza para ver más</span>
-                <svg viewBox="0 0 24 24">
-                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                </svg>
-            </div>
+            <img src="./martayabelardo.webp" alt="Marta y Abelardo" class="hero-image">
         </section>
 
-        <!-- SECCIÓN 2: CEREMONIA -->
-        <section class="section-ceremony">
-            <div class="content-box">
-                <h2>Ceremonia y Recepción</h2>
-                <div class="divider-gold"></div>
-                <p>Nos llena de alegría invitarte a celebrar nuestra unión.</p>
-                <p class="highlight-text">
-                    La Eucaristía se celebrará el<br>
-                    <strong>23 de Marzo a las 12:00 m.</strong>
-                </p>
-                <p>
-                    La recepción será en el mismo lugar,<br>
-                    a continuación de la ceremonia.
-                </p>
+        <!-- CONTENEDOR DE CONTENIDO (Fondo continuo) -->
+        <div class="section-content">
+
+            <!-- SECCIÓN 2: CUENTA REGRESIVA -->
+            <div class="countdown-wrapper">
+                <div class="countdown-title">Falta poco para el evento</div>
+
+                <div class="event-date">23 de Marzo, 2026</div>
+                <div class="event-time">12:00 m.</div>
+
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label">Días</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label">Horas</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label">Min</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label">Seg</div>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <!-- SECCIÓN 3: UBICACIÓN -->
-        <section class="section-location">
-            <div class="content-box">
-                <h2>Ubicación</h2>
-                <div class="divider-gold"></div>
-                <p><strong>Salón de Eventos La Colina</strong></p>
-                <p>Un lugar mágico para un día inolvidable.</p>
-                <br>
-                <button class="btn-gold" onclick="openMap()">Ver ubicación en Google Maps</button>
+            <!-- SECCIÓN 3: CEREMONIA -->
+            <h2>Ceremonia</h2>
+            <p>Nos llena de alegría invitarte a celebrar nuestra unión.</p>
+
+            <div class="highlight-text">
+                <p><strong>Parroquia Santa Marta</strong></p>
+                <p>La Eucaristía se celebrará a las 12:00 m.</p>
             </div>
-        </section>
 
-        <!-- SECCIÓN 4: CONFIRMACIÓN (RSVP) -->
-        <section class="section-rsvp">
-            <div class="content-box">
-                <h2>Confirmación de Asistencia</h2>
-                <div class="divider-gold"></div>
-                <p>Por favor confirma tu asistencia para reservar tu lugar.</p>
+            <p>La recepción será a continuación de la ceremonia.</p>
 
-                <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
-                    <label for="rsvpName">Nombre Completo:</label>
-                    <input type="text" id="rsvpName" placeholder="Escribe tu nombre aquí" required>
-
-                    <label for="rsvpAttend">¿Asistirás?</label>
-                    <select id="rsvpAttend" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Sí, asistiré">Sí, asistiré</option>
-                        <option value="No podré asistir">No podré asistir</option>
-                    </select>
-
-                    <label for="rsvpMessage">Mensaje (Opcional):</label>
-                    <textarea id="rsvpMessage" placeholder="Escribe un mensaje para los novios" rows="3"></textarea>
-
-                    <button type="submit" class="btn-gold">Enviar confirmación por WhatsApp</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer class="footer">
-            <p style="margin-bottom:15px; color:#aaa;">¿Tienes dudas?</p>
-            <button class="btn-outline" onclick="openWhatsAppChat()">Escríbenos al WhatsApp</button>
+            <!-- SECCIÓN 4: UBICACIÓN -->
+            <h3>Ubicación</h3>
+            <p><strong>Salón de Eventos La Colina</strong></p>
+            <p>Un lugar mágico para un día inolvidable.</p>
+            <button class="btn-gold" onclick="openMap()">Ver ubicación en Google Maps</button>
             <br><br>
-            <p class="copyright">Con amor, Marta y Abelardo ❤️</p>
-        </footer>
+
+            <!-- SECCIÓN 5: CONFIRMACIÓN (RSVP) -->
+            <h3>Confirmación</h3>
+            <p>Por favor confirma tu asistencia para reservar tu lugar.</p>
+
+            <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
+                <label for="rsvpName">Nombre Completo:</label>
+                <input type="text" id="rsvpName" placeholder="Tu nombre" required>
+
+                <label for="rsvpAttend">¿Asistirás?</label>
+                <select id="rsvpAttend" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Sí, asistiré">Sí, asistiré</option>
+                    <option value="No podré asistir">No podré asistir</option>
+                </select>
+
+                <label for="rsvpMessage">Mensaje (Opcional):</label>
+                <textarea id="rsvpMessage" placeholder="Tu mensaje..." rows="2"></textarea>
+
+                <button type="submit" class="btn-gold">Enviar RSVP por WhatsApp</button>
+            </form>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <p class="copyright">¿Tienes dudas?</p>
+                <button class="btn-outline" onclick="openWhatsAppChat()">Contacto Directo</button>
+                <br><br>
+                <p class="copyright">Con amor,<br>Marta y Abelardo ❤️</p>
+            </footer>
+
+        </div>
 
     </main>
 
@@ -596,22 +522,24 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS LENTAS ---
+        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS ---
         const starsContainer = document.getElementById('starsContainer');
-        const MAX_STARS = 30;
+        const MAX_STARS = 20;
         let starCount = 0;
 
         function createStar() {
             if (starCount >= MAX_STARS) return;
-
+            
             const star = document.createElement('div');
             star.classList.add('star');
+            
+            // Random positions and sizes
             star.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 4 + 2;
+            const size = Math.random() * 4 + 2; 
             star.style.width = size + 'px';
             star.style.height = size + 'px';
             star.style.animationDuration = (Math.random() * 5 + 5) + 's';
-
+            
             starsContainer.appendChild(star);
             starCount++;
 
@@ -621,7 +549,7 @@
             });
         }
 
-        setInterval(createStar, 400);
+        setInterval(createStar, 600);
 
         // --- MÚSICA DE FONDO ---
         const bgMusic = document.getElementById('bgMusic');
@@ -634,17 +562,17 @@
                 musicBtn.classList.remove('muted');
                 isMuted = false;
             }).catch(() => {
-                console.log('Autoplay bloqueado, esperando interacción');
+                console.log('Autoplay bloqueado');
             });
 
-            // Fallback: Activar audio con el primer toque en cualquier lado
-            document.body.addEventListener('click', function () {
+            // Unlock audio on first click
+            document.body.addEventListener('click', function() {
                 if (isMuted) {
-                    bgMusic.play().catch(() => { });
+                    bgMusic.play().catch(() => {});
                     musicBtn.classList.remove('muted');
                     isMuted = false;
                 }
-            }, { once: true }); // Solo se ejecuta una vez
+            }, { once: true });
         });
 
         function toggleMusic() {
@@ -661,12 +589,12 @@
 
         // --- GOOGLE MAPS ---
         function openMap() {
-            window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank');
+            window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank'); 
         }
 
         // --- WHATSAPP FUNCTIONS ---
         function openWhatsAppChat() {
-            window.open('https://wa.me/573000000000', '_blank'); // Reemplazar con nro real
+            window.open('https://wa.me/573000000000', '_blank'); 
         }
 
         function sendToWhatsApp(e) {
@@ -676,11 +604,10 @@
             const message = document.getElementById('rsvpMessage').value;
 
             const text = `*Confirmación de Asistencia*%0A` +
-                `📛 Nombre: ${name}%0A` +
-                `✅ Respuesta: ${attend}%0A` +
-                `💬 Mensaje: ${message}`;
-
-            // Reemplazar con el número real para RSVP
+                         `📛 Nombre: ${name}%0A` +
+                         `✅ Respuesta: ${attend}%0A` +
+                         `💬 Mensaje: ${message}`;
+            
             const whatsappUrl = `https://wa.me/573006445429?text=${text}`;
             window.open(whatsappUrl, '_blank');
         }
@@ -693,7 +620,7 @@
                     title: 'Invitación Especial',
                     text: '¡Estás invitado/a a un momento especial! 🎉',
                     url: baseUrl
-                }).catch(() => { });
+                }).catch(() => {});
             } else {
                 const text = encodeURIComponent('¡Estás invitado/a a un momento especial! 🎉 Abre aquí: ' + baseUrl);
                 window.open('https://wa.me/?text=' + text, '_blank');
