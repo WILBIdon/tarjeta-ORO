@@ -33,10 +33,11 @@
         :root {
             --bg-color: #fff;
             --text-color: #3e2723;
-            /* Café oscuro elegante */
             --text-secondary: #000;
             --gold: #C5A059;
             --gold-dark: #8B6B28;
+            --ochre: #D98829;
+            /* Ocre llamativo para botón mensaje */
             --font-main: 'Playfair Display', serif;
             --font-accent: 'Great Vibes', cursive;
         }
@@ -88,6 +89,8 @@
             padding: 0;
             border-bottom: none;
             background: none;
+            position: relative;
+            /* Para posicionar botón "Ver Mensaje" */
         }
 
         .hero-image {
@@ -95,6 +98,41 @@
             height: auto;
             display: block;
             margin-bottom: -1px;
+        }
+
+        /* Botón Ampliar Mensaje (Sobre la foto) */
+        .btn-expand-msg {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ochre);
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            cursor: pointer;
+            animation: pulseBtn 2s infinite;
+        }
+
+        @keyframes pulseBtn {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.05);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
         }
 
         /* --- 4. TIPOGRAFÍA REFINADA --- */
@@ -167,17 +205,18 @@
             margin-bottom: 5px;
         }
 
-        .countdown-subtitle {
-            font-size: 1.2rem;
+        .countdown-divider-text {
+            font-size: 1.1rem;
             color: #555;
-            margin-bottom: 20px;
+            margin: 20px 0 15px;
+            /* Espacio entre fecha y contador */
             font-style: italic;
+            font-weight: 600;
         }
 
         .event-details {
             font-size: 1.25rem;
             color: #000;
-            margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             border: 1px solid var(--gold);
@@ -326,7 +365,6 @@
             overflow: hidden;
         }
 
-        /* Rosa Flotando (SVG) */
         .rose-particle {
             position: absolute;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23C5A059'%3E%3Cpath d='M12 2C9 2 7 3.5 7 5.5c0 1.5 1 2.5 2.5 3 .5-1.5 2.5-2.5 2.5-2.5s2 1 2.5 2.5c1.5-.5 2.5-1.5 2.5-3C17 3.5 15 2 12 2z'/%3E%3Cpath d='M12 22s-2-2-4-5-2-7 0-10 6-5 6-5 4 2 6 5 2 7 0 10-4 5-4 5z' opacity='0.5'/%3E%3C/svg%3E");
@@ -334,7 +372,6 @@
             background-repeat: no-repeat;
             opacity: 0;
             animation: fallSlowly 12s linear forwards;
-            /* Caída lenta */
         }
 
         @keyframes fallSlowly {
@@ -406,13 +443,12 @@
         .footer-signature {
             font-family: var(--font-accent);
             font-size: 2.2rem;
-            /* Mucho más grande */
             color: var(--gold-dark);
             margin-bottom: 30px;
             line-height: 1.2;
         }
 
-        /* --- MODAL PROMO --- */
+        /* --- MODALES (Mensaje y Promo) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -431,11 +467,17 @@
             background: #fff;
             padding: 30px;
             width: 90%;
-            max-width: 350px;
-            border-radius: 4px;
+            max-width: 400px;
+            border-radius: 6px;
             text-align: center;
             border: 2px solid var(--gold);
             animation: fadeIn 0.3s ease;
+            position: relative;
+        }
+
+        .modal-content.message-modal {
+            background-image: url('./fondo.webp');
+            background-size: cover;
         }
 
         @keyframes fadeIn {
@@ -452,18 +494,27 @@
 
         .modal-title {
             font-family: var(--font-accent);
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--gold-dark);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4a3b32;
+            font-style: italic;
         }
 
         .modal-close {
-            margin-top: 15px;
+            margin-top: 20px;
             background: #333;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 25px;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -475,7 +526,7 @@
         <source src="./SIN TI - Los Panchos Karaoke.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- PARTICULAS (SOLO ROSAS) -->
+    <!-- PARTICULAS -->
     <div class="particle-container" id="particleContainer"></div>
 
     <!-- BOTONES FLOTANTES -->
@@ -494,6 +545,16 @@
         </div>
     </div>
 
+    <!-- MODAL DE MENSAJE ESPECIAL -->
+    <div class="modal-overlay" id="messageModal">
+        <div class="modal-content message-modal">
+            <div class="modal-title">Bodas de Oro</div>
+            <p class="modal-text">"Marta y Abelardo, la vida ha permitido a nuestros padres permanecer juntos durante 50
+                años. Y es por eso que deseamos celebrar con ustedes el 50 aniversario de su matrimonio."</p>
+            <button class="modal-close" onclick="closeModal('messageModal')">Cerrar</button>
+        </div>
+    </div>
+
     <!-- MODAL PROMO -->
     <div class="modal-overlay" id="promoModal">
         <div class="modal-content">
@@ -502,7 +563,7 @@
             <p>Te hago las mejores tarjetas digitales para tu evento especial.</p>
             <p style="font-weight: bold; margin-top: 15px; color: var(--gold-dark); font-size: 1.1rem;">
                 Contáctanos:<br>300 243 61 20</p>
-            <button class="modal-close" onclick="closePromo()">Cerrar</button>
+            <button class="modal-close" onclick="closeModal('promoModal')">Cerrar</button>
         </div>
     </div>
 
@@ -510,17 +571,20 @@
         <!-- SECCIÓN 1: PORTADA -->
         <section class="section-home">
             <img src="./martayabelardo.webp" alt="Marta y Abelardo" class="hero-image">
+            <div class="btn-expand-msg" onclick="openModal('messageModal')">Ampliar Mensaje</div>
         </section>
 
         <!-- SECCIÓN 2: CUENTA REGRESIVA -->
         <section class="page-section" style="padding-top: 30px;">
-            <div class="countdown-subtitle">Ya casi es la hora</div>
             <div class="countdown-title">Nuestras Bodas de Oro</div>
 
             <div class="event-details">
                 <div>23 de Marzo, 2026</div>
                 <div style="font-size: 1rem; margin-top: 5px; font-weight: 500;">12:00 DEL MEDIODÍA</div>
             </div>
+
+            <!-- Aquí ubicamos el aviso -->
+            <div class="countdown-divider-text">Ya casi es la hora</div>
 
             <div class="countdown-container" id="countdown">
                 <div class="countdown-item">
@@ -541,7 +605,6 @@
                 </div>
             </div>
 
-            <!-- Separador Decorativo -->
             <svg class="ornament-divider" viewBox="0 0 100 20">
                 <path d="M0 10 Q50 20 100 10 QS 50 0 0 10" fill="none" stroke="#C5A059" stroke-width="2"
                     stroke-dasharray="2,2" />
@@ -611,7 +674,6 @@
 
         <!-- FOOTER -->
         <footer class="footer page-section" style="background: none; border: none;">
-            <!-- Firma grande y visible antes del soporte -->
             <div class="footer-signature">Con amor,<br>Los Hijos de Marta y Abelardo ❤️</div>
 
             <br><br>
@@ -621,7 +683,7 @@
             <button class="btn-outline" onclick="openWhatsAppChat()">Contactar por WhatsApp</button>
 
             <br>
-            <div class="promo-link" onclick="openPromo()">¿Te gusta esta tarjeta? Haz clic aquí</div>
+            <div class="promo-link" onclick="openModal('promoModal')">¿Te gusta esta tarjeta? Haz clic aquí</div>
         </footer>
 
     </main>
@@ -652,7 +714,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTICULAS (SOLO ROSAS DORADAS) ---
+        // --- SISTEMA DE PARTICULAS ---
         const particleContainer = document.getElementById('particleContainer');
         const MAX_PARTICLES = 15;
         let particleCount = 0;
@@ -663,7 +725,6 @@
             const particle = document.createElement('div');
             particle.classList.add('rose-particle');
 
-            // Rosas cayendo
             particle.style.left = Math.random() * 90 + 5 + 'vw';
             const size = Math.random() * 15 + 20;
             particle.style.width = size + 'px';
@@ -720,7 +781,12 @@
         }
 
         function openMap() { window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank'); }
-        function openWhatsAppChat() { window.open('https://wa.me/573000000000', '_blank'); }
+
+        // --- WHATSAPP DE SOPORTE (EVENTO) ---
+        function openWhatsAppChat() {
+            const text = encodeURIComponent("Necesito más información y ayuda sobre la invitación de las bodas de oro.");
+            window.open(`https://wa.me/573006445429?text=${text}`, '_blank');
+        }
 
         function sendToWhatsApp(e) {
             e.preventDefault();
@@ -744,12 +810,12 @@
             }
         }
 
-        // --- PROMO POPUP ---
-        function openPromo() {
-            document.getElementById('promoModal').style.display = 'flex';
+        // --- GESTIÓN DE MODALES ---
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
         }
-        function closePromo() {
-            document.getElementById('promoModal').style.display = 'none';
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
         }
     </script>
 </body>
