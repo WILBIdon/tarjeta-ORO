@@ -15,16 +15,23 @@
     <meta property="og:description" content="Toca para abrir tu invitación especial">
     <meta property="og:type" content="website">
 
-    <!-- Preload critical assets -->
+    <!-- ESTRATEGIA DE PRECARGA (OPTIMIZADO PARA MÓVIL) -->
+    <!-- 1. Cargar imagen de portada inmediatamente -->
+    <link rel="preload" href="./taarjeta1nuevo.webp" as="image" type="image/webp">
+
+    <!-- 2. Precargar video para que esté listo al toque -->
     <link rel="preload" href="./sobre.mp4" as="video" type="video/mp4">
+
+    <!-- 3. Precargar la siguiente página (tarjeta) -->
+    <link rel="prefetch" href="tarjeta.html">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -38,8 +45,7 @@
             overflow: hidden;
         }
 
-        /* Contenedor principal */
-        .intro-container {
+        .container {
             position: relative;
             width: 100%;
             height: 100%;
@@ -47,23 +53,36 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            /* Indicar que es clickeable */
+            overflow: hidden;
         }
 
-        /* Fondo de Video */
-        .intro-background {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* --- ESTADO 1: IMAGEN ESTÁTICA --- */
+        .cover-image {
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 0;
-            pointer-events: none;
-            /* Dejar que el click pase al contenedor */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+            /* Encima del video */
+            transition: opacity 0.5s ease;
         }
 
-        /* Texto de instrucción */
+        /* --- ESTADO 2: VIDEO (OCULTO INICIALMENTE) --- */
+        .intro-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0;
+            /* Oculto visualmente pero listo */
+            transition: opacity 0.5s ease;
+        }
+
         .tap-text {
             position: absolute;
             bottom: 15%;
@@ -93,47 +112,76 @@
             }
         }
 
-        /* Transición de salida */
-        .fade-out {
+        /* Utilidad para ocultar */
+        .hidden {
             opacity: 0;
-            transition: opacity 0.5s ease-out;
             pointer-events: none;
+        }
+
+        .visible {
+            opacity: 1;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="intro-container" onclick="openInvitation()">
-        <!-- Video de Fondo (Autoplay, Muted, Loop, Playsinline para iPhone) -->
-        <video class="intro-background" autoplay loop muted playsinline id="bgVideo">
+    <div class="container" id="mainContainer" onclick="handleInteraction()">
+
+        <!-- 1. IMAGEN DE PORTADA (VISIBLE AL INICIO) -->
+        <img src="./taarjeta1nuevo.webp" class="cover-image" id="coverImg" alt="Portada Sobre">
+
+        <!-- 2. VIDEO (OCULTO AL INICIO) -->
+        <!-- preload="auto" para que cargue bytes mientras ven la imagen -->
+        <video class="intro-video" id="videoSobre" playsinline muted loop preload="auto">
             <source src="./sobre.mp4" type="video/mp4">
-            <!-- Fallback imagen si video falla -->
-            <img src="./taarjeta1nuevo.webp" style="width:100%; height:100%; object-fit:cover;" alt="Sobre">
         </video>
 
-        <div class="tap-text">Toca para abrir</div>
+        <div class="tap-text" id="instructionText">Toca para abrir</div>
     </div>
 
-    <!-- Script de redirección -->
     <script>
-        function openInvitation() {
-            const container = document.querySelector('.intro-container');
-            container.classList.add('fade-out');
+        const coverImg = document.getElementById('coverImg');
+        const video = document.getElementById('videoSobre');
+        const text = document.getElementById('instructionText');
 
-            // Pequeño delay para la animación
-            setTimeout(() => {
+        let step = 1; // 1 = Imagen, 2 = Video
+
+        function handleInteraction() {
+            if (step === 1) {
+                // --- TRANSICIÓN 1: IMAGEN -> VIDEO ---
+
+                // 1. Reproducir video
+                video.play().then(() => {
+                    // Solo si reproduce ok, hacemos la transición visual
+                    video.classList.add('visible');
+                    coverImg.classList.add('hidden');
+                    text.textContent = "Toca para ver tarjeta"; // Cambiar instrucción opcionalmente
+
+                    // Ahora estamos en el paso 2
+                    step = 2;
+
+                    // Precarga forzosa de la tarjeta en segundo plano si aún no se hizo
+                    prefetchCard();
+
+                }).catch(err => {
+                    console.log("Error al reproducir video, saltando directo:", err);
+                    window.location.href = 'tarjeta.html'; // Fallback
+                });
+
+            } else if (step === 2) {
+                // --- TRANSICIÓN 2: VIDEO -> TARJETA ---
                 window.location.href = 'tarjeta.html';
-            }, 300);
+            }
         }
 
-        // Forzar play en iOS si se detiene (hack común)
-        const video = document.getElementById('bgVideo');
-        document.addEventListener('touchstart', function () {
-            if (video.paused) {
-                video.play().catch(() => { });
-            }
-        }, { once: true });
+        // Precarga silenciosa
+        function prefetchCard() {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = 'tarjeta.html';
+            document.head.appendChild(link);
+        }
     </script>
 </body>
 
