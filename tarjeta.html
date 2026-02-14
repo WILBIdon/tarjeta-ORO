@@ -36,7 +36,6 @@
             /* Café oscuro elegante */
             --text-secondary: #000;
             --gold: #C5A059;
-            /* Dorado un poco más suave y elegante */
             --gold-dark: #8B6B28;
             --font-main: 'Playfair Display', serif;
             --font-accent: 'Great Vibes', cursive;
@@ -75,20 +74,16 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            /* CENTRADO GLOBAL */
             padding: 60px 30px;
 
-            /* Fondo individual para cada sección */
             background-image: url('./fondo.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
 
-            /* Sutil borde inferior para separar visualmente si el fondo se repite */
             border-bottom: 2px solid rgba(197, 160, 89, 0.2);
         }
 
-        /* Hero section exception */
         .section-home {
             padding: 0;
             border-bottom: none;
@@ -100,7 +95,6 @@
             height: auto;
             display: block;
             margin-bottom: -1px;
-            /* Seamless join */
         }
 
         /* --- 4. TIPOGRAFÍA REFINADA --- */
@@ -134,7 +128,7 @@
             font-weight: 500;
         }
 
-        /* --- 5. ELEMENTOS DECORATIVOS --- */
+        /* --- 5. ELEMENTOS DECORATIVOS (TRANSLÚCIDOS) --- */
         .ornament-divider {
             width: 100px;
             height: auto;
@@ -152,10 +146,12 @@
             padding: 30px 20px;
             margin: 20px 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            /* Más opaco para leer mejor */
+            /* Más translúcido para ver el fondo */
+            background: rgba(255, 255, 255, 0.5);
             position: relative;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(2px);
+            /* Efecto vidrio sutil */
         }
 
         .highlight-text {
@@ -166,10 +162,6 @@
         }
 
         /* --- 6. CUENTA REGRESIVA --- */
-        .countdown-wrapper {
-            padding-bottom: 20px;
-        }
-
         .countdown-title {
             font-family: var(--font-accent);
             font-size: 2.5rem;
@@ -186,7 +178,9 @@
             border: 1px solid var(--gold);
             padding: 15px 30px;
             display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
+            /* Fondo más suave */
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
         }
 
         .countdown-container {
@@ -216,20 +210,21 @@
             margin-top: 5px;
         }
 
-        /* --- 7. FORMULARIO ESTILIZADO --- */
+        /* --- 7. FORMULARIO ESTILIZADO (TRANSLÚCIDO) --- */
         .rsvp-form {
             width: 100%;
-            background: rgba(255, 255, 255, 0.9);
+            /* Fondo semi-transparente para ver textura */
+            background: rgba(255, 255, 255, 0.6);
             padding: 35px 25px;
             border: 1px solid var(--gold);
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);
             margin-top: 20px;
+            backdrop-filter: blur(3px);
         }
 
         .rsvp-form label {
             display: block;
             text-align: center;
-            /* Etiquetas centradas también */
             margin-bottom: 10px;
             color: #000;
             font-weight: 700;
@@ -244,14 +239,14 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 25px;
-            background: #fdfdfd;
+            /* Input semi-transparente */
+            background: rgba(255, 255, 255, 0.8);
             border: 1px solid #ddd;
             border-radius: 0;
             font-family: inherit;
             font-size: 1rem;
             color: #333;
             text-align: center;
-            /* Input centrado */
         }
 
         .rsvp-form input:focus,
@@ -303,30 +298,37 @@
             border-color: transparent;
         }
 
-        /* --- 9. UTILS --- */
-        .footer {
-            padding: 60px 20px;
-            background: #f9f9f9;
-            /* Footer ligeramente diferente */
-            border-top: 1px solid #eee;
-        }
 
-        .stars-container {
+        /* --- 9. PARTICULAS (ESTRELLAS Y ROSAS) --- */
+        .particle-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 5;
+            z-index: 99;
+            overflow: hidden;
         }
 
+        /* Estrella Cayendo */
         .star {
             position: absolute;
             background: var(--gold-dark);
             border-radius: 50%;
             opacity: 0;
             animation: fallSlowly linear forwards;
+        }
+
+        /* Rosa Flotando (SVG) */
+        .rose-particle {
+            position: absolute;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23C5A059'%3E%3Cpath d='M12 2C9 2 7 3.5 7 5.5c0 1.5 1 2.5 2.5 3 .5-1.5 2.5-2.5 2.5-2.5s2 1 2.5 2.5c1.5-.5 2.5-1.5 2.5-3C17 3.5 15 2 12 2z'/%3E%3Cpath d='M12 22s-2-2-4-5-2-7 0-10 6-5 6-5 4 2 6 5 2 7 0 10-4 5-4 5z' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: floatUp 15s linear forwards;
+            /* Más lento y hacia arriba */
         }
 
         @keyframes fallSlowly {
@@ -345,6 +347,26 @@
 
             100% {
                 transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-20vh) rotate(360deg) scale(0.8);
                 opacity: 0;
             }
         }
@@ -381,13 +403,18 @@
             opacity: 0.5;
         }
 
-        /* Icono decorativo SVG */
         .icon-minimal {
             width: 40px;
             height: 40px;
             margin: 20px auto;
             fill: var(--gold);
             display: block;
+        }
+
+        .footer {
+            padding: 60px 20px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
         }
     </style>
 </head>
@@ -399,8 +426,8 @@
         <source src="./SIN TI - Los Panchos Karaoke.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ESTRELLAS -->
-    <div class="stars-container" id="starsContainer"></div>
+    <!-- PARTICULAS (ESTRELLAS Y ROSAS) -->
+    <div class="particle-container" id="particleContainer"></div>
 
     <!-- BOTONES FLOTANTES -->
     <div class="floating-buttons">
@@ -555,25 +582,45 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- ESTRELLAS ---
-        const starsContainer = document.getElementById('starsContainer');
-        const MAX_STARS = 20;
-        let starCount = 0;
+        // --- SISTEMA DE PARTÍCULAS (ESTRELLAS Y ROSAS) ---
+        const particleContainer = document.getElementById('particleContainer');
+        const MAX_PARTICLES = 25; // Un poco más para mezclar
+        let particleCount = 0;
 
-        function createStar() {
-            if (starCount >= MAX_STARS) return;
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 4 + 2;
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
-            star.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            starsContainer.appendChild(star);
-            starCount++;
-            star.addEventListener('animationend', () => { star.remove(); starCount--; });
+        function createParticle() {
+            if (particleCount >= MAX_PARTICLES) return;
+
+            const isRose = Math.random() > 0.7; // 30% probabilidad de ser rosa
+            const particle = document.createElement('div');
+
+            if (isRose) {
+                particle.classList.add('rose-particle');
+                // Rosas flotan hacia arriba (brotan)
+                particle.style.left = Math.random() * 90 + 5 + 'vw'; // Evitar bordes extremos
+                const size = Math.random() * 20 + 20; // Tamaño entre 20 y 40px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10-20s (muy lento)
+            } else {
+                particle.classList.add('star');
+                // Estrellas caen
+                particle.style.left = Math.random() * 100 + 'vw';
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            }
+
+            particleContainer.appendChild(particle);
+            particleCount++;
+
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+                particleCount--;
+            });
         }
-        setInterval(createStar, 600);
+
+        setInterval(createParticle, 800);
 
         // --- AUDIO ---
         const bgMusic = document.getElementById('bgMusic');
