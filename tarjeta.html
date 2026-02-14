@@ -24,18 +24,17 @@
         rel="stylesheet">
 
     <!-- Preload del fondo para carga rápida -->
-    <link rel="preload" href="./tarjeta-maiana-152.jpg" as="image" type="image/jpeg">
+    <link rel="preload" href="./martayabelardo.webp" as="image" type="image/webp">
 
     <style>
         /* --- 1. RESET Y VARIABLES --- */
         :root {
             --bg-color: #000;
             --text-color: #fff;
-            --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.5);
-            --shadow-hard: 0 20px 50px rgba(0, 0, 0, 0.9);
-            --silver: #C0C0C0;
-            --gold: #D0C293;
-            /* Dorado champán/pálido, menos amarillo/rojizo */
+            --gold: #D4AF37;
+            /* Dorado clásico */
+            --gold-light: #F4E4BC;
+            --dark-overlay: rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -46,542 +45,404 @@
 
         body {
             background-color: var(--bg-color);
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Playfair Display', Georgia, serif;
-            overflow: hidden;
-        }
-
-        /* --- 2. CONTENEDOR PRINCIPAL (FRAME) --- */
-        .mobile-frame {
-            aspect-ratio: 750 / 1334;
-            height: 95vh;
-            max-height: 1334px;
-            width: auto;
-
-            background-image: url('./martayabelardo.webp');
-            background-size: 100% auto;
-            /* Ajuste por ancho */
-            background-position: center top;
-            background-repeat: no-repeat;
-            background-color: #1a1a1a;
-            /* Optimización de renderizado para móviles */
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-
-            border-radius: 20px;
-            box-shadow: 0 0 0 2px #333, var(--shadow-hard);
-            overflow: hidden;
-            position: relative;
-
-            will-change: transform, opacity;
-            animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-
-
-        /* --- 4. CONTENEDOR DE ESTRELLAS --- */
-        .stars-container {
-            position: fixed;
-            /* Fix para movil */
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 9999;
-            /* Maxima prioridad visual */
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* Scroll habilitado */
         }
 
-        /* --- 5. ESTRELLA CAYENDO LENTAMENTE (DORADA Y FADE) --- */
-        .star {
+        /* --- 2. CONTENEDOR PRINCIPAL --- */
+        .main-scroll {
+            width: 100%;
+            max-width: 600px;
+            /* Limitar ancho en desktop */
+            margin: 0 auto;
+            background: #111;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- 3. SECCIONES --- */
+        section {
+            width: 100%;
+            position: relative;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* SECCIÓN 1: HOME (Marta y Abelardo) */
+        .section-home {
+            height: 100vh;
+            /* Pantalla completa */
+            background-image: url('./martayabelardo.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* Degradado inferior para suavizar transición */
+        .section-home::after {
+            content: '';
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            opacity: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
             pointer-events: none;
-            box-shadow: 0 0 8px var(--gold), 0 0 16px rgba(212, 175, 55, 0.8);
-            animation: fallSlowly linear forwards;
-            z-index: 50;
         }
 
-        @keyframes fallSlowly {
-            0% {
-                transform: translateY(-20px) translateX(0);
-                opacity: 0;
-            }
+        /* SECCIÓN 2, 3, 4: FONDO COMÚN */
+        .section-ceremony,
+        .section-location,
+        .section-rsvp {
+            min-height: 80vh;
+            background-image: url('./fondo.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            /* Efecto Parallax simple */
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
 
-            15% {
-                opacity: 1;
-            }
+        /* Ajuste para móviles que no soportan background-attachment: fixed bien */
+        @media (hover: none) {
 
-            85% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(110vh) translateX(20px);
-                opacity: 0;
+            .section-ceremony,
+            .section-location,
+            .section-rsvp {
+                background-attachment: scroll;
             }
         }
 
-        /* --- 6. CUENTA REGRESIVA (CONTADOR) --- */
+        /* CAJAS DE CONTENIDO (Para leer texto sobre el fondo) */
+        .content-box {
+            background: rgba(0, 0, 0, 0.7);
+            /* Fondo semitransparente oscuro */
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid var(--gold);
+            backdrop-filter: blur(5px);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeInUp 1s ease-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #eee;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .highlight-text {
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin: 25px 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.5);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 15px 0;
+        }
+
+        .divider-gold {
+            height: 2px;
+            width: 60px;
+            background: var(--gold);
+            margin: 10px auto 25px;
+        }
+
+        /* --- 4. COUNTDOWN (Ahora en la portada) --- */
         .countdown-container {
             position: absolute;
-            bottom: 110px;
-            /* Movido abajo, encima de botones */
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            /* Menos espacio */
+            gap: 15px;
             z-index: 20;
-            background: rgba(0, 0, 0, 0.3);
-            /* Fondo sutil para legibilidad */
-            padding: 8px 15px;
-            border-radius: 20px;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         .countdown-item {
             text-align: center;
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
         }
 
         .countdown-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            /* Mas pequeio */
+            font-size: 1.6rem;
             font-weight: bold;
-            line-height: 1;
             color: var(--gold);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
         }
 
         .countdown-label {
-            font-size: 0.6rem;
-            /* Mas pequeio */
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            color: #ddd;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 2px;
-            opacity: 0.9;
-        }
-
-        /* --- 7. BOTONES DE PIE DE PÁGINA (MINIMALISTAS) --- */
-        .footer-actions {
-            position: absolute;
-            bottom: 40px;
-            /* Ajustado */
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: flex-end;
-            padding: 0 10px;
-            z-index: 100;
-        }
-
-
-
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            width: 60px;
-            /* Reducido de 80px */
-            -webkit-tap-highlight-color: transparent;
-            animation: float 4s ease-in-out infinite;
-            -webkit-animation: float 4s ease-in-out infinite;
-            /* Safari/Chrome fix */
-            will-change: transform;
-            /* Performance fix */
-        }
-
-        .action-item:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .action-item:nth-child(2) {
-            animation-delay: 1s;
-        }
-
-        .action-item:nth-child(3) {
-            animation-delay: 2s;
-        }
-
-        .action-item:nth-child(4) {
-            animation-delay: 3s;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
-        }
-
-        @-webkit-keyframes float {
-
-            0%,
-            100% {
-                -webkit-transform: translateY(0);
-                transform: translateY(0);
-            }
-
-            50% {
-                -webkit-transform: translateY(-6px);
-                transform: translateY(-6px);
-            }
-        }
-
-        .icon-circle {
-            width: 48px;
-            /* Reducido de 65px */
-            height: 48px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            /* Borde mas visible */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            /* Mas oscuro para contraste */
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2;
-        }
-
-        .icon-circle svg {
-            width: 24px;
-            /* Reducido de 32px */
-            height: 24px;
-            fill: var(--gold);
-            transition: transform 0.3s ease;
-        }
-
-        /* Texto debajo del icono (Siempre visible y legible) */
-        .action-text {
-            margin-top: 6px;
-            color: var(--gold);
-            font-size: 10px;
-            /* Ajustado */
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
-            /* Sombra fuerte */
-            pointer-events: none;
-            white-space: nowrap;
-            opacity: 1;
-            /* Siempre visible */
-            transition: opacity 0.3s ease;
+            margin-top: 5px;
             font-weight: 600;
         }
 
-        /* Estados Activos (Hover / Touch) */
-        .action-item:hover .icon-circle,
-        .action-item:active .icon-circle {
-            transform: scale(1.15);
-            background: rgba(208, 194, 147, 0.2);
-            /* var(--gold) con opacidad */
-            box-shadow: 0 0 15px rgba(208, 194, 147, 0.4);
-        }
-
-        .action-item:hover .action-text,
-        .action-item:active .action-text {
-            opacity: 1;
-        }
-
-        /* --- 8. BOTÓN DE COMPARTIR Y MÚSICA --- */
-        .floating-buttons {
+        /* Indicador de scroll */
+        .scroll-indicator {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            z-index: 30;
-        }
-
-        .floating-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: #fff;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            animation: bounce 2s infinite;
+            z-index: 20;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .floating-btn:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-
-        .floating-btn svg {
-            width: 20px;
-            height: 20px;
+        .scroll-indicator svg {
+            width: 28px;
+            height: 28px;
             fill: #fff;
+            margin-top: 5px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
         }
 
-        .floating-btn.muted svg {
-            opacity: 0.4;
-        }
-
-        /* --- 9. MODAL CON ANIMACIÓN MEJORADA --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            animation: modalFadeIn 0.3s ease forwards;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            background: #fdfdfd;
-            /* Fondo claro */
-            color: #333;
-            /* Texto oscuro */
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--gold);
-            opacity: 0;
-            animation: modalSlideUp 0.4s ease 0.1s forwards;
-        }
-
-        .modal-title {
-            font-family: 'Great Vibes', cursive;
-            color: var(--gold);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        .modal-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: #555;
-            /* Icono oscuro */
-        }
-
-        .modal-content p,
-        .modal-content li {
-            font-family: 'Playfair Display', serif;
-            color: #444;
-            /* Texto gris oscuro */
-            line-height: 1.6;
-        }
-
-        .modal-content svg {
-            fill: #555;
-            /* Iconos sobrios oscuros */
-        }
-
-        @keyframes modalSlideUp {
-            from {
-                transform: translateY(30px) scale(0.95);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            color: #555;
-            /* Oscuro para fondo claro */
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s, transform 0.2s;
-            z-index: 10;
-        }
-
-        .modal-close:hover {
-            opacity: 1;
-            transform: scale(1.1);
-            color: #000;
-        }
-
-        .modal-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--gold);
-        }
-
-        .modal-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-            animation: iconPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
+        @keyframes bounce {
 
             0%,
+            20%,
+            50%,
+            80%,
             100% {
-                transform: scale(1);
+                transform: translateX(-50%) translateY(0);
             }
 
-            50% {
-                transform: scale(1.1);
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
             }
         }
 
-        .modal-text {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 15px;
+        /* --- 5. BOTONES Y FORMULARIO --- */
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
             font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+            transition: transform 0.3s;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
         }
 
-        /* --- 10. FORMULARIO RSVP --- */
+        .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.7);
+        }
+
         .rsvp-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            text-align: left;
+            margin-top: 25px;
+        }
+
+        .rsvp-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .rsvp-form input,
         .rsvp-form select,
         .rsvp-form textarea {
+            width: 100%;
             padding: 14px;
-            border: 1px solid rgba(255, 0, 255, 0.4);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.08);
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
             color: #fff;
-            font-size: 14px;
-            font-family: 'Segoe UI', sans-serif;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+            font-size: 1rem;
         }
 
         .rsvp-form input:focus,
         .rsvp-form select:focus,
         .rsvp-form textarea:focus {
+            outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .rsvp-form textarea::placeholder {
-            color: #999;
-            /* Placeholder visible pero suave */
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .rsvp-form select option {
-            background: #1a1a2e;
+            background: #222;
             color: #fff;
         }
 
-        .rsvp-form button {
-            padding: 16px;
-            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
+        /* --- 6. FOOTER --- */
+        .footer {
+            background: #000;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 25px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .rsvp-form button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        .btn-outline:hover {
+            background: var(--gold);
+            color: #000;
         }
 
-        /* --- 11. AUDIO HIDDEN --- */
-        .bg-audio {
-            display: none;
+        .copyright {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 30px;
+            font-style: italic;
         }
 
-        /* --- 12. MOBILE PERFORMANCE OPTIMIZATIONS --- */
-        /* Reduce animations on mobile devices */
-        @media (max-width: 768px) {
+        /* --- 7. ESTRELLAS (Fix) --- */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            /* Detrás del contenido pero sobre el fondo */
+        }
 
-            /* Animaciones permitidas en movil */
-            .floating-crown {
-                animation-duration: 4s;
+        .star {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            box-shadow: 0 0 8px var(--gold);
+            animation: fallSlowly linear forwards;
+        }
+
+        @keyframes fallSlowly {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
             }
         }
 
-        /* Respect user preference for reduced motion */
-        @media (prefers-reduced-motion: reduce) {
+        /* --- 8. BOTONES FLOTANTES --- */
+        .floating-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        .floating-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: #fff;
+        }
+
+        .floating-btn.muted svg {
+            opacity: 0.5;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -589,179 +450,128 @@
 
 <body>
 
-    <!-- Audio de fondo - Nuevo Audio 2 (carga diferida/lazy para móviles) -->
-    <audio id="bgMusic" class="bg-audio" loop preload="none">
+    <!-- AUDIO DE FONDO -->
+    <audio id="bgMusic" class="bg-audio" loop preload="auto">
         <source src="./SIN TI - Los Panchos Karaoke.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="mobile-frame">
+    <!-- CONTENEDOR DE ESTRELLAS -->
+    <div class="stars-container" id="starsContainer"></div>
 
-        <!-- BOTONES FLOTANTES (Compartir + Música) -->
-        <div class="floating-buttons">
-            <div class="floating-btn" id="shareBtn" onclick="shareInvitation()">
+    <!-- BOTONES FLOTANTES -->
+    <div class="floating-buttons">
+        <div class="floating-btn" id="shareBtn" onclick="shareInvitation()">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" />
+            </svg>
+        </div>
+        <div class="floating-btn muted" id="musicBtn" onclick="toggleMusic()">
+            <svg viewBox="0 0 24 24" id="musicIcon">
+                <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- MAIN SCROLL CONTAINER -->
+    <main class="main-scroll">
+
+        <!-- SECCIÓN 1: PORTADA (Marta y Abelardo) -->
+        <section class="section-home">
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Días</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Min</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seg</div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Desliza para ver más</span>
                 <svg viewBox="0 0 24 24">
-                    <path
-                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" />
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
                 </svg>
             </div>
-            <div class="floating-btn muted" id="musicBtn" onclick="toggleMusic()">
-                <svg viewBox="0 0 24 24" id="musicIcon">
-                    <path
-                        d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-                </svg>
+        </section>
+
+        <!-- SECCIÓN 2: CEREMONIA -->
+        <section class="section-ceremony">
+            <div class="content-box">
+                <h2>Ceremonia y Recepción</h2>
+                <div class="divider-gold"></div>
+                <p>Nos llena de alegría invitarte a celebrar nuestra unión.</p>
+                <p class="highlight-text">
+                    La Eucaristía se celebrará el<br>
+                    <strong>23 de Marzo a las 12:00 m.</strong>
+                </p>
+                <p>
+                    La recepción será en el mismo lugar,<br>
+                    a continuación de la ceremonia.
+                </p>
             </div>
-        </div>
+        </section>
 
-        <!-- CONTENEDOR DE ESTRELLAS -->
-        <div class="stars-container" id="starsContainer"></div>
-
-
-
-        <!-- COUNTDOWN TIMER -->
-        <div class="countdown-container" id="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">Días</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">Horas</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">Min</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">Seg</div>
-            </div>
-        </div>
-
-
-
-        <!-- BOTONES DE PIE DE PÁGINA -->
-        <div class="footer-actions">
-
-            <!-- Botón 1: Confirmar asistencia -->
-            <div class="action-item" onclick="openModal('rsvpModal')">
-                <div class="icon-circle">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                    </svg>
-                </div>
-                <span class="action-text">Confirmar<br>Asistencia</span>
-            </div>
-
-            <!-- Botón 2: Ceremonia (Eucaristía) -->
-            <div class="action-item" onclick="openModal('eucaristiaModal')">
-                <div class="icon-circle">
-                    <svg viewBox="0 0 24 24">
-                        <!-- Icono Anillos/Copa -->
-                        <path
-                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z" />
-                    </svg>
-                </div>
-                <span class="action-text">Ceremonia</span>
-            </div>
-
-
-
-            <!-- Botón 4: Ubicación (Modal) -->
-            <div class="action-item" onclick="openModal('locationModal')">
-                <div class="icon-circle">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                </div>
-                <span class="action-text">Ubicación</span>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- MODAL: RSVP -->
-    <div class="modal-overlay" id="rsvpModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('rsvpModal')">&times;</span>
-            <div class="modal-title">Confirmar Asistencia</div>
-            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Por favor confirma tu asistencia para reservar
-                tu lugar.</p>
-            <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
-
-                <label for="rsvpName"
-                    style="color: #444; font-size: 14px; margin-bottom: 5px; font-weight: bold; text-align: left;">Nombre
-                    Completo:</label>
-                <input type="text" id="rsvpName" placeholder="Escribe tu nombre aquí" required
-                    style="color: #333; background: #fff; border: 1px solid #ccc;">
-
-                <label for="rsvpAttend"
-                    style="color: #444; font-size: 14px; margin-bottom: 5px; font-weight: bold; text-align: left;">¿Asistirás?</label>
-                <select id="rsvpAttend" required style="color: #333; background: #fff; border: 1px solid #ccc;">
-                    <option value="">Selecciona una opción</option>
-                    <option value="Sí, asistiré">Sí, asistiré</option>
-                    <option value="No podré asistir">No podré asistir</option>
-                </select>
-
-                <label for="rsvpMessage"
-                    style="color: #444; font-size: 14px; margin-bottom: 5px; font-weight: bold; text-align: left;">Mensaje
-                    (Opcional):</label>
-                <textarea id="rsvpMessage" placeholder="Escribe un mensaje para los novios" rows="3"
-                    style="color: #333; background: #fff; border: 1px solid #ccc;"></textarea>
-
-                <button type="submit" style="margin-top: 10px;">Enviar por WhatsApp</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: CEREMONIA (EUCARISTIA) -->
-    <div class="modal-overlay" id="eucaristiaModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('eucaristiaModal')">&times;</span>
-            <div class="modal-icon">✝️</div>
-            <div class="modal-title">Ceremonia y Recepción</div>
-            <div class="modal-text">
-                <p>La Eucaristía se celebrará el<br><strong>23 de Marzo a las 12:00 m.</strong></p>
-                <br>
-                <p>La recepción será en el mismo lugar,<br>a continuación de la ceremonia.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: UBICACIÓN -->
-    <div class="modal-overlay" id="locationModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('locationModal')">&times;</span>
-            <div class="modal-icon">📍</div>
-            <div class="modal-title">Ubicación</div>
-            <div class="modal-text">
+        <!-- SECCIÓN 3: UBICACIÓN -->
+        <section class="section-location">
+            <div class="content-box">
+                <h2>Ubicación</h2>
+                <div class="divider-gold"></div>
                 <p><strong>Salón de Eventos La Colina</strong></p>
+                <p>Un lugar mágico para un día inolvidable.</p>
                 <br>
-                <button onclick="openMap()"
-                    style="background: var(--gold); color: #fff; padding: 10px 20px; border: none; border-radius: 25px; font-family: 'Playfair Display'; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">Ver
-                    en Google Maps</button>
+                <button class="btn-gold" onclick="openMap()">Ver ubicación en Google Maps</button>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- MODAL: CÓDIGO DE VESTUARIO -->
-    <div class="modal-overlay" id="dressModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal('dressModal')">&times;</span>
-            <div class="modal-icon">🖤</div>
-            <div class="modal-title">Código de Vestuario</div>
-            <div class="modal-text">
-                <strong>Traje Negro Elegante</strong><br><br>
-                Damas: Vestido negro elegante<br>
-                Caballeros: Traje negro formal
+        <!-- SECCIÓN 4: CONFIRMACIÓN (RSVP) -->
+        <section class="section-rsvp">
+            <div class="content-box">
+                <h2>Confirmación de Asistencia</h2>
+                <div class="divider-gold"></div>
+                <p>Por favor confirma tu asistencia para reservar tu lugar.</p>
+
+                <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
+                    <label for="rsvpName">Nombre Completo:</label>
+                    <input type="text" id="rsvpName" placeholder="Escribe tu nombre aquí" required>
+
+                    <label for="rsvpAttend">¿Asistirás?</label>
+                    <select id="rsvpAttend" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Sí, asistiré">Sí, asistiré</option>
+                        <option value="No podré asistir">No podré asistir</option>
+                    </select>
+
+                    <label for="rsvpMessage">Mensaje (Opcional):</label>
+                    <textarea id="rsvpMessage" placeholder="Escribe un mensaje para los novios" rows="3"></textarea>
+
+                    <button type="submit" class="btn-gold">Enviar confirmación por WhatsApp</button>
+                </form>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p style="margin-bottom:15px; color:#aaa;">¿Tienes dudas?</p>
+            <button class="btn-outline" onclick="openWhatsAppChat()">Escríbenos al WhatsApp</button>
+            <br><br>
+            <p class="copyright">Con amor, Marta y Abelardo ❤️</p>
+        </footer>
+
+    </main>
 
     <script>
         // --- COUNTDOWN TIMER ---
-        // FECHA DEL EVENTO: 23 de Marzo 2026 a las 12:00 PM
         const eventDate = new Date('2026-03-23T12:00:00').getTime();
 
         function updateCountdown() {
@@ -779,7 +589,6 @@
                 document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
                 document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
             } else {
-                // Ocultar countdown cuando llegue a cero
                 document.getElementById('countdown').style.display = 'none';
             }
         }
@@ -787,63 +596,55 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS LENTAS DESDE ARRIBA ---
+        // --- SISTEMA DE PARTÍCULAS: ESTRELLAS LENTAS ---
         const starsContainer = document.getElementById('starsContainer');
-
-        // Más estrellas y más lento
-        const MAX_STARS = 25;
+        const MAX_STARS = 30;
         let starCount = 0;
-
-        const starInterval = 800;
 
         function createStar() {
             if (starCount >= MAX_STARS) return;
 
-            starCount++;
             const star = document.createElement('div');
-            star.className = 'star';
-
-            // Posición aleatoria en ancho
-            const randomX = Math.random() * 100; // 0 a 100%
-            star.style.left = randomX + '%';
-            star.style.top = '-10px';
-
-            const size = 4 + Math.random() * 6; /* 4px a 10px */
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 4 + 2;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
-
-            // Duración MUY lenta (15 a 25 segundos)
-            const duration = 15 + Math.random() * 10;
-            star.style.animationDuration = duration + 's';
-
-            // Retraso aleatorio para naturalidad
-            star.style.animationDelay = Math.random() * 5 + 's';
+            star.style.animationDuration = (Math.random() * 5 + 5) + 's';
 
             starsContainer.appendChild(star);
+            starCount++;
 
-            // Eliminar al terminar (margen de seguridad)
-            setTimeout(() => {
+            star.addEventListener('animationend', () => {
                 star.remove();
                 starCount--;
-            }, (duration + 5) * 1000);
+            });
         }
 
-        setInterval(createStar, starInterval);
+        setInterval(createStar, 400);
 
         // --- MÚSICA DE FONDO ---
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         let isMuted = true;
 
-        // Intentar autoplay cuando se carga la página
         document.addEventListener('DOMContentLoaded', function () {
+            // Intentar autoplay
             bgMusic.play().then(() => {
                 musicBtn.classList.remove('muted');
                 isMuted = false;
             }).catch(() => {
-                // Autoplay bloqueado, esperar interacción del usuario
-                console.log('Autoplay blocked, waiting for user interaction');
+                console.log('Autoplay bloqueado, esperando interacción');
             });
+
+            // Fallback: Activar audio con el primer toque en cualquier lado
+            document.body.addEventListener('click', function () {
+                if (isMuted) {
+                    bgMusic.play().catch(() => { });
+                    musicBtn.classList.remove('muted');
+                    isMuted = false;
+                }
+            }, { once: true }); // Solo se ejecuta una vez
         });
 
         function toggleMusic() {
@@ -858,70 +659,47 @@
             }
         }
 
-        // --- COMPARTIR INVITACIÓN ---
-        function shareInvitation() {
-            // Siempre compartir el index para mostrar la animación inicial
-            const baseUrl = window.location.href.replace('tarjeta.html', 'index.html');
-            const shareData = {
-                title: 'Invitación Especial',
-                text: '¡Estás invitado/a a un momento especial! 🎉',
-                url: baseUrl
-            };
-
-            if (navigator.share) {
-                navigator.share(shareData).catch(() => { });
-            } else {
-                // Fallback: compartir por WhatsApp
-                const text = encodeURIComponent('¡Estás invitado/a a un momento especial! 🎉 Abre aquí: ' + baseUrl);
-                window.open('https://wa.me/?text=' + text, '_blank');
-            }
-        }
-
-        // --- MAPA ---
+        // --- GOOGLE MAPS ---
         function openMap() {
-            window.open('https://maps.app.goo.gl/3ATmoXduKa4cgkVv7', '_blank');
+            window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank');
         }
 
-        // --- MODALES ---
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+        // --- WHATSAPP FUNCTIONS ---
+        function openWhatsAppChat() {
+            window.open('https://wa.me/573000000000', '_blank'); // Reemplazar con nro real
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Cerrar modal al hacer clic fuera
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function (e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
-        });
-
-        // --- ENVIAR A WHATSAPP (RSVP) ---
-        function sendToWhatsApp(event) {
-            event.preventDefault();
-
+        function sendToWhatsApp(e) {
+            e.preventDefault();
             const name = document.getElementById('rsvpName').value;
             const attend = document.getElementById('rsvpAttend').value;
             const message = document.getElementById('rsvpMessage').value;
 
-            let text = `*Confirmación de Asistencia*%0A`;
-            text += `📛 Nombre: ${name}%0A`;
-            text += `✅ Respuesta: ${attend}`;
-            if (message) {
-                text += `%0A💬 Mensaje: ${message}`;
-            }
+            const text = `*Confirmación de Asistencia*%0A` +
+                `📛 Nombre: ${name}%0A` +
+                `✅ Respuesta: ${attend}%0A` +
+                `💬 Mensaje: ${message}`;
 
+            // Reemplazar con el número real para RSVP
             const whatsappUrl = `https://wa.me/573006445429?text=${text}`;
             window.open(whatsappUrl, '_blank');
+        }
 
-            closeModal('rsvpModal');
+        // --- COMPARTIR ---
+        function shareInvitation() {
+            const baseUrl = window.location.href.replace('tarjeta.html', 'index.html');
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Invitación Especial',
+                    text: '¡Estás invitado/a a un momento especial! 🎉',
+                    url: baseUrl
+                }).catch(() => { });
+            } else {
+                const text = encodeURIComponent('¡Estás invitado/a a un momento especial! 🎉 Abre aquí: ' + baseUrl);
+                window.open('https://wa.me/?text=' + text, '_blank');
+            }
         }
     </script>
-
 </body>
 
 </html>
