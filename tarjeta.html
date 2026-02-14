@@ -10,9 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
 
-    <title>Invitación Marta y Abelardo</title>
-    <meta property="og:title" content="Estás invitado/a">
-    <meta property="og:description" content="Acompáñanos en este momento especial. Toca aquí para ver los detalles.">
+    <title>Bodas de Oro: Marta y Abelardo</title>
+    <meta property="og:title" content="Estás invitado/a a nuestras Bodas de Oro">
+    <meta property="og:description" content="50 Años de Amor. Toca aquí para ver los detalles.">
     <meta property="og:type" content="website">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -66,7 +66,7 @@
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- 3. SECCIONES INDIVIDUALES (FONDO PROPIO) --- */
+        /* --- 3. SECCIONES INDIVIDUALES --- */
         .page-section {
             width: 100%;
             position: relative;
@@ -128,7 +128,7 @@
             font-weight: 500;
         }
 
-        /* --- 5. ELEMENTOS DECORATIVOS (TRANSLÚCIDOS) --- */
+        /* --- 5. ELEMENTOS DECORATIVOS --- */
         .ornament-divider {
             width: 100px;
             height: auto;
@@ -146,12 +146,10 @@
             padding: 30px 20px;
             margin: 20px 0;
             width: 100%;
-            /* Más translúcido para ver el fondo */
             background: rgba(255, 255, 255, 0.5);
             position: relative;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(2px);
-            /* Efecto vidrio sutil */
         }
 
         .highlight-text {
@@ -178,7 +176,6 @@
             border: 1px solid var(--gold);
             padding: 15px 30px;
             display: inline-block;
-            /* Fondo más suave */
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(2px);
         }
@@ -210,10 +207,9 @@
             margin-top: 5px;
         }
 
-        /* --- 7. FORMULARIO ESTILIZADO (TRANSLÚCIDO) --- */
+        /* --- 7. FORMULARIO ESTILIZADO --- */
         .rsvp-form {
             width: 100%;
-            /* Fondo semi-transparente para ver textura */
             background: rgba(255, 255, 255, 0.6);
             padding: 35px 25px;
             border: 1px solid var(--gold);
@@ -239,7 +235,6 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 25px;
-            /* Input semi-transparente */
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid #ddd;
             border-radius: 0;
@@ -298,8 +293,21 @@
             border-color: transparent;
         }
 
+        .promo-link {
+            font-size: 0.9rem;
+            color: var(--gold-dark);
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+        }
 
-        /* --- 9. PARTICULAS (ESTRELLAS Y ROSAS) --- */
+        .promo-link:hover {
+            color: var(--text-color);
+        }
+
+
+        /* --- 9. PARTICULAS (ROSAS CAALLENDO) --- */
         .particle-container {
             position: fixed;
             top: 0;
@@ -311,15 +319,6 @@
             overflow: hidden;
         }
 
-        /* Estrella Cayendo */
-        .star {
-            position: absolute;
-            background: var(--gold-dark);
-            border-radius: 50%;
-            opacity: 0;
-            animation: fallSlowly linear forwards;
-        }
-
         /* Rosa Flotando (SVG) */
         .rose-particle {
             position: absolute;
@@ -327,46 +326,26 @@
             background-size: contain;
             background-repeat: no-repeat;
             opacity: 0;
-            animation: floatUp 15s linear forwards;
-            /* Más lento y hacia arriba */
+            animation: fallSlowly 12s linear forwards;
+            /* Caída lenta */
         }
 
         @keyframes fallSlowly {
             0% {
-                transform: translateY(-20px);
+                transform: translateY(-5vh) rotate(0deg) scale(0.6);
                 opacity: 0;
             }
 
-            20% {
-                opacity: 0.5;
+            10% {
+                opacity: 0.7;
             }
 
             80% {
-                opacity: 0.5;
+                opacity: 0.7;
             }
 
             100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(110vh) rotate(0deg) scale(0.5);
-                opacity: 0;
-            }
-
-            20% {
-                opacity: 0.6;
-            }
-
-            80% {
-                opacity: 0.6;
-            }
-
-            100% {
-                transform: translateY(-20vh) rotate(360deg) scale(0.8);
+                transform: translateY(105vh) rotate(360deg) scale(1);
                 opacity: 0;
             }
         }
@@ -416,6 +395,60 @@
             background: #f9f9f9;
             border-top: 1px solid #eee;
         }
+
+        /* --- MODAL PROMO --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 4px;
+            text-align: center;
+            border: 2px solid var(--gold);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-title {
+            font-family: var(--font-accent);
+            font-size: 2rem;
+            color: var(--gold-dark);
+            margin-bottom: 10px;
+        }
+
+        .modal-close {
+            margin-top: 15px;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -426,7 +459,7 @@
         <source src="./SIN TI - Los Panchos Karaoke.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- PARTICULAS (ESTRELLAS Y ROSAS) -->
+    <!-- PARTICULAS (SOLO ROSAS) -->
     <div class="particle-container" id="particleContainer"></div>
 
     <!-- BOTONES FLOTANTES -->
@@ -445,6 +478,18 @@
         </div>
     </div>
 
+    <!-- MODAL PROMO -->
+    <div class="modal-overlay" id="promoModal">
+        <div class="modal-content">
+            <div class="modal-title">Diseño de Invitaciones</div>
+            <p>¿Te gustó esta tarjeta?</p>
+            <p>Te hago las mejores tarjetas digitales para tu evento especial.</p>
+            <p style="font-weight: bold; margin-top: 15px; color: var(--gold-dark); font-size: 1.1rem;">
+                Contáctanos:<br>300 243 61 20</p>
+            <button class="modal-close" onclick="closePromo()">Cerrar</button>
+        </div>
+    </div>
+
     <main class="main-scroll">
         <!-- SECCIÓN 1: PORTADA -->
         <section class="section-home">
@@ -453,7 +498,7 @@
 
         <!-- SECCIÓN 2: CUENTA REGRESIVA -->
         <section class="page-section" style="padding-top: 30px;">
-            <div class="countdown-title">Falta poco para el evento</div>
+            <div class="countdown-title">Nuestras Bodas de Oro</div>
 
             <div class="event-details">
                 <div>23 de Marzo, 2026</div>
@@ -488,14 +533,16 @@
 
         <!-- SECCIÓN 3: CEREMONIA -->
         <section class="page-section">
-            <h2>Ceremonia</h2>
+            <h2>50 Años de Amor</h2>
 
             <svg class="icon-minimal" viewBox="0 0 24 24">
                 <path
                     d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
 
-            <p>Con la bendición de Dios y de nuestros padres,<br>celebramos nuestro amor.</p>
+            <p style="font-style: italic;">"Con cariño, los hijos de Marta y Abelardo te invitan a celebrar estas Bodas
+                de Oro."</p>
+            <p>Agradecemos a Dios por el ejemplo de amor y unión de nuestros padres.</p>
 
             <div class="highlight-box">
                 <h3>Parroquia Santa Marta</h3>
@@ -515,7 +562,7 @@
             </svg>
 
             <p style="font-weight: 700; color: #000; font-size: 1.3rem;">Salón de Eventos La Colina</p>
-            <p>Un lugar mágico para un día inolvidable.</p>
+            <p>Un lugar lleno de historia para celebrar.</p>
 
             <button class="btn-gold" onclick="openMap()">Ver ubicación en Mapa</button>
         </section>
@@ -523,7 +570,7 @@
         <!-- SECCIÓN 5: CONFIRMACIÓN (RSVP) -->
         <section class="page-section">
             <h2>Confirmación</h2>
-            <p>Tu compañía es el mejor regalo.<br>Por favor confirma tu asistencia.</p>
+            <p>Tu presencia es el regalo más valioso para nosotros.</p>
 
             <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
                 <label for="rsvpName">NOMBRE COMPLETO</label>
@@ -537,7 +584,7 @@
                 </select>
 
                 <label for="rsvpMessage">MENSAJE (OPCIONAL)</label>
-                <textarea id="rsvpMessage" placeholder="Escribe un mensaje para los novios..." rows="2"></textarea>
+                <textarea id="rsvpMessage" placeholder="Escribe un mensaje de felicitación..." rows="2"></textarea>
 
                 <button type="submit" class="btn-gold">Enviar Confirmación</button>
             </form>
@@ -550,8 +597,10 @@
                 ¿Necesitas ayuda?</p>
             <button class="btn-outline" onclick="openWhatsAppChat()">Contactar por WhatsApp</button>
             <br><br><br>
-            <p class="copyright" style="font-size: 0.85rem; color: #888;">Con amor,<br><strong>Marta y Abelardo</strong>
-                ❤️</p>
+            <p class="copyright" style="font-size: 0.9rem; color: #555;">Con amor,<br><strong>Los Hijos de Marta y
+                    Abelardo</strong> ❤️</p>
+            <br>
+            <div class="promo-link" onclick="openPromo()">¿Te gusta esta tarjeta? Haz clic aquí</div>
         </footer>
 
     </main>
@@ -582,34 +631,23 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // --- SISTEMA DE PARTÍCULAS (ESTRELLAS Y ROSAS) ---
+        // --- SISTEMA DE PARTICULAS (SOLO ROSAS DORADAS) ---
         const particleContainer = document.getElementById('particleContainer');
-        const MAX_PARTICLES = 25; // Un poco más para mezclar
+        const MAX_PARTICLES = 15;
         let particleCount = 0;
 
         function createParticle() {
             if (particleCount >= MAX_PARTICLES) return;
 
-            const isRose = Math.random() > 0.7; // 30% probabilidad de ser rosa
             const particle = document.createElement('div');
+            particle.classList.add('rose-particle');
 
-            if (isRose) {
-                particle.classList.add('rose-particle');
-                // Rosas flotan hacia arriba (brotan)
-                particle.style.left = Math.random() * 90 + 5 + 'vw'; // Evitar bordes extremos
-                const size = Math.random() * 20 + 20; // Tamaño entre 20 y 40px
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's'; // 10-20s (muy lento)
-            } else {
-                particle.classList.add('star');
-                // Estrellas caen
-                particle.style.left = Math.random() * 100 + 'vw';
-                const size = Math.random() * 4 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            }
+            // Rosas cayendo
+            particle.style.left = Math.random() * 90 + 5 + 'vw';
+            const size = Math.random() * 15 + 20;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
 
             particleContainer.appendChild(particle);
             particleCount++;
@@ -620,7 +658,7 @@
             });
         }
 
-        setInterval(createParticle, 800);
+        setInterval(createParticle, 1000);
 
         // --- AUDIO ---
         const bgMusic = document.getElementById('bgMusic');
@@ -668,7 +706,7 @@
             const name = document.getElementById('rsvpName').value;
             const attend = document.getElementById('rsvpAttend').value;
             const message = document.getElementById('rsvpMessage').value;
-            const text = `*Confirmación de Asistencia*%0A` +
+            const text = `*Confirmación de Asistencia (Bodas de Oro)*%0A` +
                 `📛 Nombre: ${name}%0A` +
                 `✅ Respuesta: ${attend}%0A` +
                 `💬 Mensaje: ${message}`;
@@ -678,11 +716,19 @@
         function shareInvitation() {
             const baseUrl = window.location.href.replace('tarjeta.html', 'index.html');
             if (navigator.share) {
-                navigator.share({ title: 'Invitación Especial', text: '¡Estás invitado/a! 🎉', url: baseUrl }).catch(() => { });
+                navigator.share({ title: 'Bodas de Oro: Marta y Abelardo', text: '¡50 Años de Amor! 🎉', url: baseUrl }).catch(() => { });
             } else {
-                const text = encodeURIComponent('¡Estás invitado/a! 🎉 Abre aquí: ' + baseUrl);
+                const text = encodeURIComponent('¡Bodas de Oro de Marta y Abelardo! 🎉 Abre aquí: ' + baseUrl);
                 window.open('https://wa.me/?text=' + text, '_blank');
             }
+        }
+
+        // --- PROMO POPUP ---
+        function openPromo() {
+            document.getElementById('promoModal').style.display = 'flex';
+        }
+        function closePromo() {
+            document.getElementById('promoModal').style.display = 'none';
         }
     </script>
 </body>
