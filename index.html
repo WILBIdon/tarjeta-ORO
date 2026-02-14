@@ -15,14 +15,9 @@
     <meta property="og:description" content="Toca para abrir tu invitación especial">
     <meta property="og:type" content="website">
 
-    <!-- ESTRATEGIA DE PRECARGA (OPTIMIZADO PARA MÓVIL) -->
-    <!-- 1. Cargar imagen de portada inmediatamente -->
+    <!-- ESTRATEGIA DE PRECARGA -->
     <link rel="preload" href="./taarjeta1nuevo.webp" as="image" type="image/webp">
-
-    <!-- 2. Precargar video para que esté listo al toque -->
     <link rel="preload" href="./sobre.mp4" as="video" type="video/mp4">
-
-    <!-- 3. Precargar la siguiente página (tarjeta) -->
     <link rel="prefetch" href="tarjeta.html">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -56,7 +51,7 @@
             overflow: hidden;
         }
 
-        /* --- ESTADO 1: IMAGEN ESTÁTICA --- */
+        /* --- ESTADO 1: IMAGEN --- */
         .cover-image {
             position: absolute;
             top: 0;
@@ -65,11 +60,10 @@
             height: 100%;
             object-fit: cover;
             z-index: 2;
-            /* Encima del video */
             transition: opacity 0.5s ease;
         }
 
-        /* --- ESTADO 2: VIDEO (OCULTO INICIALMENTE) --- */
+        /* --- ESTADO 2: VIDEO (NO LOOP) --- */
         .intro-video {
             position: absolute;
             top: 0;
@@ -79,7 +73,6 @@
             object-fit: cover;
             z-index: 1;
             opacity: 0;
-            /* Oculto visualmente pero listo */
             transition: opacity 0.5s ease;
         }
 
@@ -96,6 +89,7 @@
             animation: pulse 2s ease-in-out infinite;
             pointer-events: none;
             z-index: 10;
+            transition: opacity 0.3s;
         }
 
         @keyframes pulse {
@@ -112,7 +106,6 @@
             }
         }
 
-        /* Utilidad para ocultar */
         .hidden {
             opacity: 0;
             pointer-events: none;
@@ -126,14 +119,14 @@
 
 <body>
 
+    <!-- El click en cualquier parte del contenedor maneja el flujo -->
     <div class="container" id="mainContainer" onclick="handleInteraction()">
 
-        <!-- 1. IMAGEN DE PORTADA (VISIBLE AL INICIO) -->
+        <!-- 1. IMAGEN -->
         <img src="./taarjeta1nuevo.webp" class="cover-image" id="coverImg" alt="Portada Sobre">
 
-        <!-- 2. VIDEO (OCULTO AL INICIO) -->
-        <!-- preload="auto" para que cargue bytes mientras ven la imagen -->
-        <video class="intro-video" id="videoSobre" playsinline muted loop preload="auto">
+        <!-- 2. VIDEO (Sin loop) -->
+        <video class="intro-video" id="videoSobre" playsinline muted preload="auto">
             <source src="./sobre.mp4" type="video/mp4">
         </video>
 
@@ -145,37 +138,39 @@
         const video = document.getElementById('videoSobre');
         const text = document.getElementById('instructionText');
 
-        let step = 1; // 1 = Imagen, 2 = Video
+        // Estado del flujo
+        let step = 1; // 1=Imagen, 2=Video Playing, 3=Video Ended (Ready to Open)
+
+        // Cuando el video termina, mostramos el texto de nuevo
+        video.onended = function () {
+            step = 3; // Video terminó
+            text.textContent = "Abrir invitación";
+            text.classList.remove('hidden');
+        };
 
         function handleInteraction() {
             if (step === 1) {
-                // --- TRANSICIÓN 1: IMAGEN -> VIDEO ---
-
-                // 1. Reproducir video
+                // --- CLICK 1: Ver Video ---
                 video.play().then(() => {
-                    // Solo si reproduce ok, hacemos la transición visual
                     video.classList.add('visible');
                     coverImg.classList.add('hidden');
-                    text.textContent = "Toca para ver tarjeta"; // Cambiar instrucción opcionalmente
+                    text.classList.add('hidden'); // Ocultar texto mientras reproduce
 
-                    // Ahora estamos en el paso 2
-                    step = 2;
+                    step = 2; // Video reproduciendo
 
-                    // Precarga forzosa de la tarjeta en segundo plano si aún no se hizo
+                    // Precargar tarjeta mientras se ve el video
                     prefetchCard();
-
                 }).catch(err => {
-                    console.log("Error al reproducir video, saltando directo:", err);
-                    window.location.href = 'tarjeta.html'; // Fallback
+                    // Si falla video, ir directo a tarjeta
+                    window.location.href = 'tarjeta.html';
                 });
 
-            } else if (step === 2) {
-                // --- TRANSICIÓN 2: VIDEO -> TARJETA ---
+            } else {
+                // --- CLICK 2 (Durante o al final del video): Abrir Tarjeta ---
                 window.location.href = 'tarjeta.html';
             }
         }
 
-        // Precarga silenciosa
         function prefetchCard() {
             const link = document.createElement('link');
             link.rel = 'prefetch';
