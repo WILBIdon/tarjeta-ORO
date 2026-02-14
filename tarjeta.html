@@ -729,20 +729,20 @@
 
         // --- SISTEMA DE PARTICULAS ---
         const particleContainer = document.getElementById('particleContainer');
-        const MAX_PARTICLES = 15;
+        const MAX_PARTICLES = 15; 
         let particleCount = 0;
 
         function createParticle() {
             if (particleCount >= MAX_PARTICLES) return;
-
+            
             const particle = document.createElement('div');
             particle.classList.add('rose-particle');
-
+            
             particle.style.left = Math.random() * 90 + 5 + 'vw';
-            const size = Math.random() * 15 + 20;
+            const size = Math.random() * 15 + 20; 
             particle.style.width = size + 'px';
             particle.style.height = size + 'px';
-            particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            particle.style.animationDuration = (Math.random() * 8 + 8) + 's'; 
 
             particleContainer.appendChild(particle);
             particleCount++;
@@ -757,17 +757,21 @@
 
         // --- AUDIO ---
         const bgMusic = document.getElementById('bgMusic');
-        bgMusic.volume = 0.6; // Volumen al 60%
         const musicBtn = document.getElementById('musicBtn');
-        let isMuted = true;
-        let userInteracted = false;
+        // Initial volume set (redundant check)
+        bgMusic.volume = 0.5;
 
         function tryPlayMusic() {
+            // FORCE VOLUME AGAIN BEFORE PLAY
+            bgMusic.volume = 0.5;
+            
             if (userInteracted) return;
             bgMusic.play().then(() => {
                 musicBtn.classList.remove('muted');
-                isMuted = false;
+                // Ensure volume wasn't reset by system
+                bgMusic.volume = 0.5;
                 userInteracted = true;
+                
                 document.body.removeEventListener('click', tryPlayMusic);
                 document.body.removeEventListener('touchstart', tryPlayMusic);
                 document.body.removeEventListener('scroll', tryPlayMusic);
@@ -783,26 +787,23 @@
 
         function toggleMusic() {
             if (bgMusic.paused) {
-                bgMusic.play().catch(() => { });
+                bgMusic.volume = 0.5; // FORCE VOLUME ON UNMUTE
+                bgMusic.play().catch(() => {});
                 musicBtn.classList.remove('muted');
-                isMuted = false;
-                userInteracted = true;
+                userInteracted = true; 
             } else {
                 bgMusic.pause();
                 musicBtn.classList.add('muted');
-                isMuted = true;
             }
         }
 
         function openMap() { window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank'); }
-
-        // --- WHATSAPP DE SOPORTE (EVENTO) ---
-        function openWhatsAppChat() {
+        
+        function openWhatsAppChat() { 
             const text = encodeURIComponent("Necesito más información y ayuda sobre la invitación de las bodas de oro.");
-            window.location.href = `whatsapp://send?phone=573006445429&text=${text}`;
+            window.location.href = `whatsapp://send?phone=573006445429&text=${text}`; 
         }
-
-        // --- WHATSAPP DE PROMO (DISEÑO) ---
+        
         function contactPromo() {
             const text = encodeURIComponent("Me gustan tus tarjetas, puedo por favor cotizar una para mi evento.");
             window.location.href = `whatsapp://send?phone=573002436120&text=${text}`;
@@ -814,23 +815,22 @@
             const attend = document.getElementById('rsvpAttend').value;
             const message = document.getElementById('rsvpMessage').value;
             const text = `*Confirmación de Asistencia (Bodas de Oro)*%0A` +
-                `📛 Nombre: ${name}%0A` +
-                `✅ Respuesta: ${attend}%0A` +
-                `💬 Mensaje: ${message}`;
+                         `📛 Nombre: ${name}%0A` +
+                         `✅ Respuesta: ${attend}%0A` +
+                         `💬 Mensaje: ${message}`;
             window.location.href = `whatsapp://send?phone=573006445429&text=${text}`;
         }
 
         function shareInvitation() {
             const baseUrl = window.location.href.replace('tarjeta.html', 'index.html');
             if (navigator.share) {
-                navigator.share({ title: 'Bodas de Oro: Marta y Abelardo', text: '¡50 Años de Amor! 🎉', url: baseUrl }).catch(() => { });
+                navigator.share({ title: 'Bodas de Oro: Marta y Abelardo', text: '¡50 Años de Amor! 🎉', url: baseUrl }).catch(() => {});
             } else {
                 const text = encodeURIComponent('¡Bodas de Oro de Marta y Abelardo! 🎉 Abre aquí: ' + baseUrl);
                 window.location.href = `whatsapp://send?text=${text}`;
             }
         }
 
-        // --- GESTIÓN DE MODALES ---
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
         }
