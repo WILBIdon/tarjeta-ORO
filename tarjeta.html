@@ -37,7 +37,6 @@
             --gold: #C5A059;
             --gold-dark: #8B6B28;
             --ochre: #D98829;
-            /* Ocre llamativo para botón mensaje */
             --font-main: 'Playfair Display', serif;
             --font-accent: 'Great Vibes', cursive;
         }
@@ -90,7 +89,6 @@
             border-bottom: none;
             background: none;
             position: relative;
-            /* Para posicionar botón "Ver Mensaje" */
         }
 
         .hero-image {
@@ -100,22 +98,22 @@
             margin-bottom: -1px;
         }
 
-        /* Botón Ampliar Mensaje (Sobre la foto) */
+        /* Botón Ampliar Mensaje (Más pequeño) */
         .btn-expand-msg {
             position: absolute;
-            bottom: 25px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--ochre);
             color: #fff;
-            border: 2px solid #fff;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            border: 1px solid #fff;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             z-index: 20;
             cursor: pointer;
             animation: pulseBtn 2s infinite;
@@ -209,7 +207,6 @@
             font-size: 1.1rem;
             color: #555;
             margin: 20px 0 15px;
-            /* Espacio entre fecha y contador */
             font-style: italic;
             font-weight: 600;
         }
@@ -318,6 +315,20 @@
 
         .btn-gold:hover {
             background-position: right center;
+        }
+
+        /* Botón estilo WhatsApp */
+        .btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .btn-outline {
@@ -448,7 +459,7 @@
             line-height: 1.2;
         }
 
-        /* --- MODALES (Mensaje y Promo) --- */
+        /* --- MODALES --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -508,13 +519,14 @@
 
         .modal-close {
             margin-top: 20px;
-            background: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 25px;
+            background: transparent;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -561,8 +573,9 @@
             <div class="modal-title">Diseño de Invitaciones</div>
             <p>¿Te gustó esta tarjeta?</p>
             <p>Te hago las mejores tarjetas digitales para tu evento especial.</p>
-            <p style="font-weight: bold; margin-top: 15px; color: var(--gold-dark); font-size: 1.1rem;">
-                Contáctanos:<br>300 243 61 20</p>
+
+            <button class="btn-whatsapp" onclick="contactPromo()">Cotizar mi tarjeta</button>
+            <br>
             <button class="modal-close" onclick="closeModal('promoModal')">Cerrar</button>
         </div>
     </div>
@@ -786,6 +799,12 @@
         function openWhatsAppChat() {
             const text = encodeURIComponent("Necesito más información y ayuda sobre la invitación de las bodas de oro.");
             window.open(`https://wa.me/573006445429?text=${text}`, '_blank');
+        }
+
+        // --- WHATSAPP DE PROMO (DISEÑO) ---
+        function contactPromo() {
+            const text = encodeURIComponent("Me gustan tus tarjetas, puedo por favor cotizar una para mi evento.");
+            window.open(`https://wa.me/573002436120?text=${text}`, '_blank');
         }
 
         function sendToWhatsApp(e) {
