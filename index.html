@@ -88,9 +88,13 @@
             text-align: center;
             text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
             animation: pulse 2s ease-in-out infinite;
-            pointer-events: none;
             z-index: 10;
             transition: opacity 0.3s;
+        }
+
+        /* Clase helper para ocultar */
+        .d-none {
+            display: none !important;
         }
 
         @keyframes pulse {
@@ -146,7 +150,7 @@
         video.onended = function () {
             step = 3; // Video terminó
             text.textContent = "Clic para leer el mensaje";
-            text.classList.remove('hidden'); // Solo ahora es visible
+            text.classList.remove('d-none'); // Mostrar texto
         };
 
         function handleInteraction() {
@@ -155,7 +159,9 @@
                 video.play().then(() => {
                     video.classList.add('visible');
                     coverImg.classList.add('hidden');
-                    text.classList.add('hidden'); // Ocultar texto inicial al instante
+
+                    // OCULTAR TEXTO COMPLETAMENTE
+                    text.classList.add('d-none');
 
                     step = 2; // Video reproduciendo
 
