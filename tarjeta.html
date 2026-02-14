@@ -535,7 +535,7 @@
 
     <!-- AUDIO DE FONDO -->
     <audio id="bgMusic" class="bg-audio" loop preload="auto">
-        <source src="./SIN TI - Los Panchos Karaoke.mp3" type="audio/mpeg">
+        <source src="./audio_nuevo.mp3" type="audio/mpeg">
     </audio>
 
     <!-- PARTICULAS -->
@@ -766,8 +766,7 @@
 
             // INTENTO DE REPRODUCCION
             bgMusic.play().then(() => {
-                // Si funciona, ajustamos volumen despues de iniciar
-                bgMusic.volume = 0.6;
+                // NO setting volume here ensures default 100%
                 musicBtn.classList.remove('muted');
                 isMuted = false;
                 userInteracted = true;
@@ -777,17 +776,14 @@
                 document.body.removeEventListener('touchstart', tryPlayMusic);
                 document.body.removeEventListener('scroll', tryPlayMusic);
             }).catch((e) => {
-                // Si falla (ej. sin interaccion), esperamos a la interaccion
+                // Si falla, esperamos interacción
                 console.log('Esperando interaccion para audio...', e);
             });
         }
 
         // Listeners globales para activar audio al primer toque
         document.addEventListener('DOMContentLoaded', function () {
-            // Intentamos reproducir por si el navegador lo permite
             tryPlayMusic();
-
-            // Agregamos listeners de respaldo
             document.body.addEventListener('click', tryPlayMusic, { once: true });
             document.body.addEventListener('touchstart', tryPlayMusic, { once: true });
             document.body.addEventListener('scroll', tryPlayMusic, { once: true });
@@ -795,7 +791,7 @@
 
         function toggleMusic() {
             if (bgMusic.paused) {
-                bgMusic.volume = 0.6; // Aseguramos volumen al reactivar
+                // No volume constraint
                 bgMusic.play().catch(() => { });
                 musicBtn.classList.remove('muted');
                 isMuted = false;
