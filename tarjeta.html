@@ -164,7 +164,14 @@
             font-family: var(--font-accent);
             font-size: 2.5rem;
             color: var(--gold-dark);
-            margin-bottom: 15px;
+            margin-bottom: 5px;
+        }
+
+        .countdown-subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         .event-details {
@@ -396,6 +403,15 @@
             border-top: 1px solid #eee;
         }
 
+        .footer-signature {
+            font-family: var(--font-accent);
+            font-size: 2.2rem;
+            /* Mucho más grande */
+            color: var(--gold-dark);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
         /* --- MODAL PROMO --- */
         .modal-overlay {
             position: fixed;
@@ -498,6 +514,7 @@
 
         <!-- SECCIÓN 2: CUENTA REGRESIVA -->
         <section class="page-section" style="padding-top: 30px;">
+            <div class="countdown-subtitle">Ya casi es la hora</div>
             <div class="countdown-title">Nuestras Bodas de Oro</div>
 
             <div class="event-details">
@@ -565,6 +582,8 @@
             <p>Un lugar lleno de historia para celebrar.</p>
 
             <button class="btn-gold" onclick="openMap()">Ver ubicación en Mapa</button>
+            <p style="font-size: 0.8rem; color: #000; margin-top: 10px;">Si ves la ubicación ahora, saldrás de la
+                tarjeta</p>
         </section>
 
         <!-- SECCIÓN 5: CONFIRMACIÓN (RSVP) -->
@@ -584,7 +603,7 @@
                 </select>
 
                 <label for="rsvpMessage">MENSAJE (OPCIONAL)</label>
-                <textarea id="rsvpMessage" placeholder="Escribe un mensaje de felicitación..." rows="2"></textarea>
+                <textarea id="rsvpMessage" placeholder="Un mensaje para nuestros padres..." rows="2"></textarea>
 
                 <button type="submit" class="btn-gold">Enviar Confirmación</button>
             </form>
@@ -592,13 +611,15 @@
 
         <!-- FOOTER -->
         <footer class="footer page-section" style="background: none; border: none;">
+            <!-- Firma grande y visible antes del soporte -->
+            <div class="footer-signature">Con amor,<br>Los Hijos de Marta y Abelardo ❤️</div>
+
+            <br><br>
             <p class="copyright"
-                style="margin-bottom: 20px; font-style: normal; text-transform: uppercase; letter-spacing: 1px;">
+                style="margin-bottom: 20px; font-style: normal; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">
                 ¿Necesitas ayuda?</p>
             <button class="btn-outline" onclick="openWhatsAppChat()">Contactar por WhatsApp</button>
-            <br><br><br>
-            <p class="copyright" style="font-size: 0.9rem; color: #555;">Con amor,<br><strong>Los Hijos de Marta y
-                    Abelardo</strong> ❤️</p>
+
             <br>
             <div class="promo-link" onclick="openPromo()">¿Te gusta esta tarjeta? Haz clic aquí</div>
         </footer>
