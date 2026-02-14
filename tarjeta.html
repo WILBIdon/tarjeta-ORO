@@ -560,35 +560,49 @@
 
         setInterval(createStar, 600);
 
-        // --- MÚSICA DE FONDO ---
+        // --- MÚSICA DE FONDO (ROBUST AUTOPLAY) ---
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         let isMuted = true;
+        let userInteracted = false;
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Intentar autoplay
+        function tryPlayMusic() {
+            if (userInteracted) return;
+
             bgMusic.play().then(() => {
                 musicBtn.classList.remove('muted');
                 isMuted = false;
-            }).catch(() => {
-                console.log('Autoplay bloqueado');
+                userInteracted = true;
+                // Cleanup listeners once successful
+                document.body.removeEventListener('click', tryPlayMusic);
+                document.body.removeEventListener('touchstart', tryPlayMusic);
+                document.body.removeEventListener('scroll', tryPlayMusic);
+            }).catch((error) => {
+                console.log('Autoplay bloqueado, esperando interacción en body:', error);
             });
+        }
 
-            // Unlock audio on first click
-            document.body.addEventListener('click', function () {
-                if (isMuted) {
-                    bgMusic.play().catch(() => { });
-                    musicBtn.classList.remove('muted');
-                    isMuted = false;
-                }
-            }, { once: true });
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Intentar autoplay directo
+            bgMusic.play().then(() => {
+                musicBtn.classList.remove('muted');
+                isMuted = false;
+                userInteracted = true;
+            }).catch(() => {
+                console.log('Autoplay inicial bloqueado. Activando fallback de interacción.');
+                // 2. Fallback: Cualquier toque o scroll activa el audio
+                document.body.addEventListener('click', tryPlayMusic, { once: true });
+                document.body.addEventListener('touchstart', tryPlayMusic, { once: true });
+                document.body.addEventListener('scroll', tryPlayMusic, { once: true });
+            });
         });
 
         function toggleMusic() {
-            if (isMuted) {
+            if (bgMusic.paused) {
                 bgMusic.play().catch(() => { });
                 musicBtn.classList.remove('muted');
                 isMuted = false;
+                userInteracted = true;
             } else {
                 bgMusic.pause();
                 musicBtn.classList.add('muted');
