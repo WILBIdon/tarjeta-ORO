@@ -798,13 +798,13 @@
         // --- WHATSAPP DE SOPORTE (EVENTO) ---
         function openWhatsAppChat() {
             const text = encodeURIComponent("Necesito más información y ayuda sobre la invitación de las bodas de oro.");
-            window.open(`https://wa.me/573006445429?text=${text}`, '_blank');
+            window.location.href = `whatsapp://send?phone=573006445429&text=${text}`;
         }
 
         // --- WHATSAPP DE PROMO (DISEÑO) ---
         function contactPromo() {
             const text = encodeURIComponent("Me gustan tus tarjetas, puedo por favor cotizar una para mi evento.");
-            window.open(`https://wa.me/573002436120?text=${text}`, '_blank');
+            window.location.href = `whatsapp://send?phone=573002436120&text=${text}`;
         }
 
         function sendToWhatsApp(e) {
@@ -816,7 +816,7 @@
                 `📛 Nombre: ${name}%0A` +
                 `✅ Respuesta: ${attend}%0A` +
                 `💬 Mensaje: ${message}`;
-            window.open(`https://wa.me/573006445429?text=${text}`, '_blank');
+            window.location.href = `whatsapp://send?phone=573006445429&text=${text}`;
         }
 
         function shareInvitation() {
@@ -825,7 +825,7 @@
                 navigator.share({ title: 'Bodas de Oro: Marta y Abelardo', text: '¡50 Años de Amor! 🎉', url: baseUrl }).catch(() => { });
             } else {
                 const text = encodeURIComponent('¡Bodas de Oro de Marta y Abelardo! 🎉 Abre aquí: ' + baseUrl);
-                window.open('https://wa.me/?text=' + text, '_blank');
+                window.location.href = `whatsapp://send?text=${text}`;
             }
         }
 
