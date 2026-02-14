@@ -32,151 +32,171 @@
         /* --- 1. RESET Y VARIABLES --- */
         :root {
             --bg-color: #fff;
-            /* Fondo claro para fusionarse con imágenes */
             --text-color: #3e2723;
             /* Café oscuro elegante */
             --text-secondary: #000;
-            /* Negro para textos importantes */
             --gold: #D4AF37;
-            /* Dorado clásico */
             --gold-dark: #B8860B;
             --font-main: 'Playfair Display', serif;
             --font-accent: 'Great Vibes', cursive;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--bg-color);
-            width: 100%;
-            height: 100%;
             font-family: var(--font-main);
             color: var(--text-color);
             overflow-x: hidden;
-            overflow-y: auto;
+            width: 100%;
         }
 
-        /* --- 2. CONTENEDOR PRINCIPAL (Móvil) --- */
+        /* --- 2. LAYOUT MÓVIL (CENTRADO Y DECORATIVO) --- */
         .main-scroll {
             width: 100%;
             max-width: 480px;
-            /* Ancho máximo de móvil típico */
             margin: 0 auto;
             background: #fff;
             position: relative;
             z-index: 10;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- 3. SECCIONES --- */
         section {
             width: 100%;
-            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            /* Alineación superior */
             align-items: center;
             text-align: center;
-            padding: 0;
-            /* Sin padding global para imágenes full width */
         }
 
-        /* SECCIÓN 1: PORTADA (Marta y Abelardo) */
+        /* --- A. HERO IMAGE (SIN BORDES BLANCOS) --- */
         .section-home {
-            width: 100%;
-            /* La altura se ajusta al contenido (imagen) */
-            background-color: #fff;
+            line-height: 0;
+            /* Elimina espacio bajo imagen */
+            background-color: #000;
+            /* Fondo oscuro por si acaso */
         }
 
         .hero-image {
             width: 100%;
             height: auto;
             display: block;
-            mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+            margin-bottom: -1px;
+            /* Solapa con la siguiente sección */
         }
 
-        /* SECCIÓN 2: CUENTA REGRESIVA Y TEXTO (Fondo continuo) */
+        /* --- B. CONTENIDO (FONDO CONTINUO, MÁRGENES AMPLIOS) --- */
         .section-content {
             background-image: url('./fondo.webp');
             background-size: 100% auto;
-            /* Ajuste perfecto al ancho */
             background-repeat: repeat-y;
-            /* Repetir verticalmente si es necesario */
             background-position: top center;
-            padding: 20px 20px 60px;
-            margin-top: -5px;
-            /* Eliminar gaps */
+
+            /* Espaciado generoso para que no toque bordes */
+            padding: 50px 35px 80px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* TEXTOS Y TIPOGRAFÍA */
+        /* --- C. TIPOGRAFÍA DECORATIVA --- */
         h2 {
             font-family: var(--font-accent);
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--gold-dark);
-            margin: 30px 0 15px;
+            margin: 40px 0 20px;
+            line-height: 1.2;
             text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         h3 {
             font-family: var(--font-main);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-color);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 30px;
-            margin-bottom: 10px;
-            font-weight: 600;
+            letter-spacing: 3px;
+            margin: 40px 0 15px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 10px;
+            display: inline-block;
         }
 
         p {
             font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            line-height: 1.8;
+            margin-bottom: 20px;
             color: var(--text-color);
-            font-weight: 500;
+            max-width: 90%;
+            /* Evita que el texto sea muy ancho */
+        }
+
+        /* TEXTO DESTACADO (CAJA DECORATIVA) */
+        .highlight-box {
+            border: 1px solid var(--gold);
+            padding: 25px;
+            margin: 30px 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        /* Esquinas decorativas (pseudo-elementos) */
+        .highlight-box::before,
+        .highlight-box::after {
+            content: "•";
+            color: var(--gold-dark);
+            font-size: 2rem;
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+        }
+
+        .highlight-box::after {
+            top: auto;
+            bottom: -20px;
         }
 
         .highlight-text {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            margin: 20px 0;
-            padding: 15px 0;
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
+            font-weight: 600;
         }
 
-        /* --- 4. COUNTDOWN (Estilo Oscuro/Elegante) --- */
+        /* --- D. CUENTA REGRESIVA (DISEÑO LIMPIO) --- */
         .countdown-wrapper {
-            margin: 20px 0 40px;
+            margin: 10px 0 50px;
+            width: 100%;
+            border-bottom: 1px dashed var(--gold);
+            /* Separador sutil */
+            padding-bottom: 40px;
         }
 
         .countdown-title {
             font-family: var(--font-accent);
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--gold-dark);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
-        .event-date {
-            font-size: 1.4rem;
-            font-weight: bold;
+        .event-details {
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            margin-bottom: 5px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .event-time {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            font-style: italic;
+            border: 1px solid var(--gold);
+            padding: 10px 20px;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.7);
         }
 
         .countdown-container {
@@ -206,91 +226,86 @@
             margin-top: 5px;
         }
 
-        /* --- 5. BOTONES Y FORMULARIO (Estilo Oscuro) --- */
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
-            color: #fff;
-            border: none;
-            padding: 16px 32px;
-            font-size: 1.1rem;
-            font-family: var(--font-main);
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
-            transition: transform 0.3s;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 15px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-gold:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.5);
-        }
-
+        /* --- E. FORMULARIO ELEGANTE --- */
         .rsvp-form {
-            text-align: left;
-            margin-top: 25px;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px 20px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.15);
+            margin-top: 20px;
         }
 
         .rsvp-form label {
             display: block;
+            text-align: left;
+            /* Etiquetas a la izquierda para legibilidad */
             margin-bottom: 8px;
             color: var(--text-secondary);
-            font-size: 0.95rem;
             font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .rsvp-form input,
         .rsvp-form select,
         .rsvp-form textarea {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 14px;
+            margin-bottom: 20px;
             background: #fff;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            color: #333;
+            /* Borde suave */
+            border-radius: 0;
+            /* Bordes rectos más elegantes */
             font-family: inherit;
             font-size: 1rem;
+            color: #333;
+            transition: all 0.3s;
         }
 
         .rsvp-form input:focus,
-        .rsvp-form select:focus,
         .rsvp-form textarea:focus {
+            border-color: var(--gold-dark);
+            background: #fff;
             outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
         }
 
-        /* --- 6. FOOTER --- */
-        .footer {
-            background: transparent;
-            padding: 40px 20px;
-            text-align: center;
-            border-top: none;
+        /* --- F. BOTONES (GOLD GRADIENT) --- */
+        .btn-gold {
+            background: linear-gradient(to right, #B8860B, #D4AF37, #B8860B);
+            background-size: 200% auto;
+            color: #fff;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1rem;
+            font-family: var(--font-main);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.5s;
+            box-shadow: 0 4px 10px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-gold:hover {
+            background-position: right center;
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--text-color);
+            border: 1px solid var(--text-color);
             color: var(--text-color);
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: all 0.3s;
+            padding: 12px 30px;
             text-transform: uppercase;
-            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
         }
 
         .btn-outline:hover {
@@ -298,13 +313,7 @@
             color: #fff;
         }
 
-        .copyright {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 30px;
-        }
-
-        /* --- 7. ESTRELLAS (Sutiles en fondo claro) --- */
+        /* --- G. ESTRELLAS --- */
         .stars-container {
             position: fixed;
             top: 0;
@@ -312,14 +321,12 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 100;
-            /* Encima de todo */
+            z-index: 5;
         }
 
         .star {
             position: absolute;
             background: var(--gold-dark);
-            /* Más oscuras para verse */
             border-radius: 50%;
             opacity: 0;
             animation: fallSlowly linear forwards;
@@ -331,12 +338,13 @@
                 opacity: 0;
             }
 
-            10% {
-                opacity: 0.8;
+            20% {
+                opacity: 0.6;
             }
 
-            90% {
-                opacity: 0.8;
+            /* Menos opacidad para no distraer */
+            80% {
+                opacity: 0.6;
             }
 
             100% {
@@ -345,33 +353,32 @@
             }
         }
 
-        /* --- 8. BOTONES FLOTANTES --- */
+        /* --- H. FLOATING BUTTONS --- */
         .floating-buttons {
             position: fixed;
             top: 15px;
             right: 15px;
-            z-index: 200;
+            z-index: 999;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .floating-btn {
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.8);
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid var(--gold);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .floating-btn svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: var(--gold-dark);
         }
 
@@ -422,8 +429,10 @@
             <div class="countdown-wrapper">
                 <div class="countdown-title">Falta poco para el evento</div>
 
-                <div class="event-date">23 de Marzo, 2026</div>
-                <div class="event-time">12:00 m.</div>
+                <div class="event-details">
+                    <div>23 de Marzo, 2026</div>
+                    <div style="font-size: 1rem; margin-top: 5px;">12:00 del mediodía</div>
+                </div>
 
                 <div class="countdown-container" id="countdown">
                     <div class="countdown-item">
@@ -447,49 +456,49 @@
 
             <!-- SECCIÓN 3: CEREMONIA -->
             <h2>Ceremonia</h2>
-            <p>Nos llena de alegría invitarte a celebrar nuestra unión.</p>
+            <p>Con la bendición de Dios y de nuestros padres, celebramos nuestro amor.</p>
 
-            <div class="highlight-text">
-                <p><strong>Parroquia Santa Marta</strong></p>
-                <p>La Eucaristía se celebrará a las 12:00 m.</p>
+            <div class="highlight-box">
+                <h3>Parroquia Santa Marta</h3>
+                <p class="highlight-text">23 de Marzo • 12:00 m.</p>
+                <p>La recepción se llevará a cabo a continuación de la ceremonia en el mismo lugar.</p>
             </div>
 
-            <p>La recepción será a continuación de la ceremonia.</p>
-
             <!-- SECCIÓN 4: UBICACIÓN -->
-            <h3>Ubicación</h3>
+            <h2>Ubicación</h2>
             <p><strong>Salón de Eventos La Colina</strong></p>
-            <p>Un lugar mágico para un día inolvidable.</p>
-            <button class="btn-gold" onclick="openMap()">Ver ubicación en Google Maps</button>
+            <p>Hemos elegido este lugar especial para compartir contigo.</p>
+
+            <button class="btn-gold" onclick="openMap()">Ver ubicación en Mapa</button>
             <br><br>
 
             <!-- SECCIÓN 5: CONFIRMACIÓN (RSVP) -->
-            <h3>Confirmación</h3>
-            <p>Por favor confirma tu asistencia para reservar tu lugar.</p>
+            <h2>Confirmación</h2>
+            <p>Tu compañía es el mejor regalo. Por favor confirma tu asistencia.</p>
 
             <form class="rsvp-form" id="rsvpForm" onsubmit="sendToWhatsApp(event)">
-                <label for="rsvpName">Nombre Completo:</label>
-                <input type="text" id="rsvpName" placeholder="Tu nombre" required>
+                <label for="rsvpName">NOMBRE COMPLETO</label>
+                <input type="text" id="rsvpName" placeholder="Escribe tu nombre y apellido" required>
 
-                <label for="rsvpAttend">¿Asistirás?</label>
+                <label for="rsvpAttend">ASISTENCIA</label>
                 <select id="rsvpAttend" required>
                     <option value="">Selecciona una opción</option>
-                    <option value="Sí, asistiré">Sí, asistiré</option>
-                    <option value="No podré asistir">No podré asistir</option>
+                    <option value="Sí, con gusto asistiré">Sí, con gusto asistiré</option>
+                    <option value="Lo siento, no podré asistir">Lo siento, no podré asistir</option>
                 </select>
 
-                <label for="rsvpMessage">Mensaje (Opcional):</label>
-                <textarea id="rsvpMessage" placeholder="Tu mensaje..." rows="2"></textarea>
+                <label for="rsvpMessage">MENSAJE (OPCIONAL)</label>
+                <textarea id="rsvpMessage" placeholder="Escribe un mensaje para los novios..." rows="2"></textarea>
 
-                <button type="submit" class="btn-gold">Enviar RSVP por WhatsApp</button>
+                <button type="submit" class="btn-gold">Enviar Confirmación</button>
             </form>
 
             <!-- FOOTER -->
             <footer class="footer">
-                <p class="copyright">¿Tienes dudas?</p>
-                <button class="btn-outline" onclick="openWhatsAppChat()">Contacto Directo</button>
+                <p class="copyright" style="margin-bottom: 20px;">¿Necesitas ayuda?</p>
+                <button class="btn-outline" onclick="openWhatsAppChat()">Contactar por WhatsApp</button>
                 <br><br>
-                <p class="copyright">Con amor,<br>Marta y Abelardo ❤️</p>
+                <p class="copyright">Con amor,<br><strong>Marta y Abelardo</strong> ❤️</p>
             </footer>
 
         </div>
@@ -529,17 +538,17 @@
 
         function createStar() {
             if (starCount >= MAX_STARS) return;
-            
+
             const star = document.createElement('div');
             star.classList.add('star');
-            
+
             // Random positions and sizes
             star.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 4 + 2; 
+            const size = Math.random() * 4 + 2;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
             star.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            
+
             starsContainer.appendChild(star);
             starCount++;
 
@@ -566,9 +575,9 @@
             });
 
             // Unlock audio on first click
-            document.body.addEventListener('click', function() {
+            document.body.addEventListener('click', function () {
                 if (isMuted) {
-                    bgMusic.play().catch(() => {});
+                    bgMusic.play().catch(() => { });
                     musicBtn.classList.remove('muted');
                     isMuted = false;
                 }
@@ -589,12 +598,12 @@
 
         // --- GOOGLE MAPS ---
         function openMap() {
-            window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank'); 
+            window.open('https://maps.app.goo.gl/P4yZ5t8x3q7Q8m5A7', '_blank');
         }
 
         // --- WHATSAPP FUNCTIONS ---
         function openWhatsAppChat() {
-            window.open('https://wa.me/573000000000', '_blank'); 
+            window.open('https://wa.me/573000000000', '_blank');
         }
 
         function sendToWhatsApp(e) {
@@ -604,10 +613,10 @@
             const message = document.getElementById('rsvpMessage').value;
 
             const text = `*Confirmación de Asistencia*%0A` +
-                         `📛 Nombre: ${name}%0A` +
-                         `✅ Respuesta: ${attend}%0A` +
-                         `💬 Mensaje: ${message}`;
-            
+                `📛 Nombre: ${name}%0A` +
+                `✅ Respuesta: ${attend}%0A` +
+                `💬 Mensaje: ${message}`;
+
             const whatsappUrl = `https://wa.me/573006445429?text=${text}`;
             window.open(whatsappUrl, '_blank');
         }
@@ -620,7 +629,7 @@
                     title: 'Invitación Especial',
                     text: '¡Estás invitado/a a un momento especial! 🎉',
                     url: baseUrl
-                }).catch(() => {});
+                }).catch(() => { });
             } else {
                 const text = encodeURIComponent('¡Estás invitado/a a un momento especial! 🎉 Abre aquí: ' + baseUrl);
                 window.open('https://wa.me/?text=' + text, '_blank');
